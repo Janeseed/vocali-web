@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./index.css";
 import { Layout, Menu, Breadcrumb } from 'antd';
+import { PitchDetector } from "./PitchDetector";
 
 const { Header, Content, Footer } = Layout;
 
@@ -24,7 +25,8 @@ ReactDOM.render(
             </Breadcrumb>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 380 }}>
                 Content
-      </div>
+            </div>
+            <PitchDetector />
         </Content>
         <Footer style={{ textAlign: 'center' }}>Vocali ?2021 Created</Footer>
     </Layout>,
