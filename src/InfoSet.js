@@ -78,19 +78,10 @@ class InfoSet extends React.Component {
               onChange={this.handleAgeChange}
             />
           </div>
-          <div className="pitch-div">
-            <p className="subtitle">Pitch</p>
-            <Button
-              className="pitch-button"
-              onClick={() => this.nextPath("/pitch")}
-            >
-              TEST
-            </Button>
-          </div>
         </div>
         <Button
           className="next-button"
-          onClick={() => this.setInfo()}
+          onClick={() => this.nextPath("/pitch")}
           Type="primary"
           Class="standard"
           State="normal"
