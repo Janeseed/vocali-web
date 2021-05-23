@@ -1,15 +1,11 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     withRouter
   } from "react-router-dom";
 
-import { Button, Typography, Input, InputNumber, Layout, Tag, Avatar, Card, Col, Row } from 'antd';
-import { UserOutlined, LeftOutlined } from '@ant-design/icons';
-
+  import { Button, Typography, Input, Skeleton, Switch, Card, Layout, Tag, Avatar, Row, Col } from 'antd';
+  import { FrownOutlined, HeartOutlined, EditOutlined, QuestionOutlined, SettingOutlined } from '@ant-design/icons';
 import "./css/home.css";
 import "./css/list.css";
 import Logo from "./vocali_logo2.svg";
@@ -17,8 +13,7 @@ import Heart from "./favorite_black_24dp.svg";
 
 const { Header, Footer, Sider, Content } = Layout;
 const { CheckableTag } = Tag;
-const tagsData = ['Alone', 'Friends', 'Superior'];
-const tagsData2 = ['Happy', 'Exuberant', 'Frantic', 'Anxious/Sad', 'Calm', 'Contentment', 'Energetic', 'Depression'];
+const { Meta } = Card;
 
 class List extends React.Component {
     
@@ -27,7 +22,7 @@ class List extends React.Component {
     }
 
     state = {
-        selectedTags: [],
+        songList: [], loading: false,
     };
 
     handleChange(tag, checked) {
@@ -39,6 +34,7 @@ class List extends React.Component {
     
     render() {
         const { selectedTags } = this.state;
+        const { loading } = this.state;
 
         return (
             <Layout className="layout">
@@ -60,18 +56,84 @@ class List extends React.Component {
                 <Content style={{ backgroundColor: '#F6F0FE'}}>
                     <div className="list-div">
                         <p className="list-title">List of Likes</p>
-                        <div className="song-card">
-                            <Card className="cards1" title="Song Title" bordered={false} style={{ marginTop: 16 }}>
-                                <p className="song-num">######</p>
-                                <p className="artist">Artist</p>
+                        <div className ="song-card">
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
                             </Card>
-                            <Card className="cards2" title="Song Title" bordered={false} style={{ marginTop: 16 }}>
-                                <p className="song-num">######</p>
-                                <p className="artist">Artist</p>
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
                             </Card>
-                            <Card className="cards3" title="Song Title" bordered={false} style={{ marginTop: 16 }}>
-                                <p className="song-num">######</p>
-                                <p className="artist">Artist</p>
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
+                            </Card>
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
+                            </Card>
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
+                            </Card>
+                            <Card
+                                className = "song-info"
+                                title="######"
+                                extra={<a href="#">More</a>}
+                                style={{ width: 170, marginTop: 16 }}
+                            >
+                                <Skeleton loading={loading} avatar active>
+                                    <Meta
+                                        title="Song Title"
+                                        description="Artist Name"
+                                    />
+                                </Skeleton>
                             </Card>
                         </div>
                     </div>

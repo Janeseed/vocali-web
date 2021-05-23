@@ -196,7 +196,7 @@
   width: 306px;
   height: 62px;
   left: calc(50% - 306px / 2 - 1.5px);
-  bottom: 88px;
+  bottom: 10vw;
 
   /* vocali_purple */
   background: #6200ee;
