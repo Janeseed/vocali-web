@@ -1,0 +1,91 @@
+body {
+  background-color: #f6f0fe;
+}
+
+.list-div {
+  left: calc(50% - 333px / 2);
+  top: 185px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-title {
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 21px 0 0 0;
+
+  /* Heading 24 / bold */
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+  /* identical to box height, or 133% */
+
+  color: #000000;
+}
+
+.song-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+
+  width: 333px;
+  left: calc(50% - 333px / 2);
+
+  /* Inside Auto Layout */
+  flex: none;
+  order: 1;
+  margin: 21px 0;
+}
+
+.card1,
+.card2,
+.card3 {
+  width: 45vw;
+  padding: 5vw;
+
+  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+}
+
+.song-title {
+  /* Subheading 16 / medium */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  /* Character / Title .85 */
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.song-num {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 24px;
+  /* identical to box height, or 86% */
+
+  /* Character / Title .85 */
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.artist {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
+
+  /* Character / Secondary .45 */
+  color: rgba(0, 0, 0, 0.45);
+}
