@@ -34,8 +34,6 @@ class InfoSet extends React.Component {
   setInfo = () => {
     const name = this.state.name;
     const age = this.state.age;
-    console.log(name);
-    console.log(name === "");
     if (name === "" || age === "") {
       this.handleModalChange();
       return;
@@ -44,13 +42,9 @@ class InfoSet extends React.Component {
       const userId = response.data.id;
       const cookies = new Cookies();
       cookies.set("id", userId, { path: "/" });
-      this.nextPath("/songpref");
+      this.props.history.push("/pitch");
     });
   };
-
-  nextPath(path) {
-    this.props.history.push(path);
-  }
 
   render() {
     return (
@@ -81,7 +75,7 @@ class InfoSet extends React.Component {
         </div>
         <Button
           className="next-button"
-          onClick={() => this.nextPath("/pitch")}
+          onClick={this.setInfo}
           Type="primary"
           Class="standard"
           State="normal"
