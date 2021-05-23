@@ -1,89 +1,104 @@
-import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    withRouter
-  } from "react-router-dom";
+import React from "react";
+import { withRouter } from "react-router-dom";
 
-import { Button, Typography, Input, InputNumber, Layout, Tag, Avatar } from 'antd';
-import { UserOutlined, LeftOutlined } from '@ant-design/icons';
+import { Button, Layout, Tag, Avatar, Divider } from "antd";
 
 import "./css/home.css";
-import Logo from "./vocali_logo2.svg";
+import Cookies from "universal-cookie";
+import VocaliHeader from "./Header.js";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 const { CheckableTag } = Tag;
-const tagsData = ['Alone', 'Friends', 'Superior'];
-const tagsData2 = ['Happy', 'Exuberant', 'Frantic', 'Anxious/Sad', 'Calm', 'Contentment', 'Energetic', 'Depression'];
+const tagsData = ["Alone", "Friends", "Superior"];
+const tagsData2 = ["Happy", "Energetic", "Depression", "Calm"];
 
 class Home extends React.Component {
-    
-    nextPath(path) {
-        this.props.history.push(path);
-    }
-
-    state = {
-        selectedTags: [],
+  constructor(props) {
+    super(props);
+    this.cookies = new Cookies();
+    this.state = {
+      selectedPeople: "",
+      selectedMood: "",
     };
+  }
 
-    handleChange(tag, checked) {
-        const { selectedTags } = this.state;
-        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-        console.log('You are interested in: ', nextSelectedTags);
-        this.setState({ selectedTags: nextSelectedTags });
+  componentDidMount() {
+    const people = this.cookies.get("people", { path: "/" });
+    if (people) {
+      this.setState({ selectedPeople: people });
     }
-    
-    render() {
-        const { selectedTags } = this.state;
-
-        return (
-            <Layout className="layout">
-                <Header className="header">
-                    <img className="App-logo" src={Logo} alt="Vocali Logo"/>
-                    <div className="user-info">
-                        <Avatar className = "avatar" style={{ backgroundColor: '#D9D9D9' }}>S</Avatar>
-                        <Tag className="age-info">27</Tag>
-                        <Tag className="pitch-info">A#</Tag>
-                    </div>
-                    <div className="mood-dashboard">
-                        <p className="mood-title">Today's Mood</p>
-                    </div>
-                </Header>
-                <Content style={{ backgroundColor: '#ffffff'}}>
-                    <div className="selection-board">
-                        <div className="mood-selection">   
-                            <p className="select-title">Select<br></br>Today's Mood</p>
-                        </div>
-                        <hr />
-                        <span className="question">With Whom?</span>
-                        {tagsData.map(tag => (
-                            <CheckableTag
-                                key={tag}
-                                checked={selectedTags.indexOf(tag) > -1}
-                                onChange={checked => this.handleChange(tag, checked)}
-                            >
-                                {tag}
-                            </CheckableTag>
-                        ))}
-
-                        <span className="question">What kind of mood you like today?</span>
-                        {tagsData2.map(tag => (
-                            <CheckableTag
-                                key={tag}
-                                checked={selectedTags.indexOf(tag) > -1}
-                                onChange={checked => this.handleChange(tag, checked)}
-                            >
-                                {tag}
-                            </CheckableTag>
-                        ))}
-                    </div>
-                    <Button className="find-button" onClick={() => this.nextPath("/result")} Type="primary" Class="standard" State="normal">FIND SONG</Button>
-                </Content>
-            </Layout>
-        )
+    const mood = this.cookies.get("mood", { path: "/" });
+    if (mood) {
+      this.setState({ selectedMood: mood });
     }
+  }
+
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
+  handlePeopleChange(tag, checked) {
+    const nextPeople = checked ? tag : "";
+    this.setState({ selectedPeople: nextPeople });
+    this.cookies.set("people", nextPeople, { path: "/" });
+  }
+
+  handleMoodChange(tag, checked) {
+    const nextMood = checked ? tag : "";
+    this.setState({ selectedMood: nextMood });
+    this.cookies.set("mood", nextMood, { path: "/" });
+  }
+
+  render() {
+    return (
+      <Layout className="layout">
+        <VocaliHeader
+          people={this.state.selectedPeople}
+          mood={this.state.selectedMood}
+        />
+        <Content style={{ backgroundColor: "#ffffff" }}>
+          <div className="selection-board">
+            <div className="mood-selection">
+              <p className="select-title">
+                Select<br></br>Today's Mood
+              </p>
+            </div>
+            <hr />
+            <div className="question">With Whom?</div>
+            {tagsData.map((tag) => (
+              <CheckableTag
+                key={tag}
+                checked={this.state.selectedPeople === tag}
+                onChange={(checked) => this.handlePeopleChange(tag, checked)}
+              >
+                {tag}
+              </CheckableTag>
+            ))}
+            <Divider />
+            <div className="question">What kind of mood you like today?</div>
+            {tagsData2.map((tag) => (
+              <CheckableTag
+                key={tag}
+                checked={this.state.selectedMood === tag}
+                onChange={(checked) => this.handleMoodChange(tag, checked)}
+              >
+                {tag}
+              </CheckableTag>
+            ))}
+          </div>
+          <Button
+            className="find-button"
+            onClick={() => this.nextPath("/result")}
+            Type="primary"
+            Class="standard"
+            State="normal"
+          >
+            FIND SONG
+          </Button>
+        </Content>
+      </Layout>
+    );
+  }
 }
 
 export default withRouter(Home);
