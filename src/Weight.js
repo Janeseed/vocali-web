@@ -16,7 +16,9 @@ const { Header, Footer, Sider, Content } = Layout;
 class Weight extends React.Component {
     
     state = {
-        moodWeight: 1, songPrefWeight: 1, pitchWeight: 1,
+        moodWeight: 1,
+        songPrefWeight: 1,
+        pitchWeight: 1,
     }
 
     nextPath(path) {

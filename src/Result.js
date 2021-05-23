@@ -4,7 +4,7 @@ import {
     withRouter
   } from "react-router-dom";
 
-import { Button, Typography, Input, Skeleton, Switch, Card, Layout, Tag, Avatar, Row, Col, Popover } from 'antd';
+import { Button, Typography, Drawer, Skeleton, Modal, Card, Layout, Tag, Avatar, Row, Col, Popover } from 'antd';
 import { FrownOutlined, HeartOutlined, EditOutlined, QuestionOutlined, SettingOutlined } from '@ant-design/icons';
 
 import "./css/home.css";
@@ -15,14 +15,39 @@ const { Header, Footer, Sider, Content } = Layout;
 const { Meta } = Card;
 
 class Result extends React.Component {
-    nextPath(path) {
-        this.props.history.push(path);
-    }
-
     state = {
-        songList: [], loading: false,
+        songList: [],
+        loading: false,
+        modal: false,
+        drawer: false,
     };
     
+    showMoreInfo(songinfo) {
+        const {artist, title, pitch, songNum, pitchScore, songPrefScore, moodScore} = songinfo;
+        Modal.info({
+            title: {title},
+            content: (
+              <div>
+                <p>{artist}</p>
+                <p>{pitch}</p>
+              </div>
+            ),
+            onOk() {},
+          });
+    }
+
+    handleModalChange = () => {
+        this.setState({
+          modal: !this.state.modal,
+        });
+      };
+
+    handleDrawerChange= () => {
+        this.setState({
+            drawer: !this.state.drawer,
+        });
+    }
+
     render() {
         const { loading } = this.state;
         const songInfo = {
@@ -35,7 +60,7 @@ class Result extends React.Component {
             pitch: "A#",
             songNum: "000000",
         }
-        const {artist, title, pitch, songNum} = songInfo;
+        const { artist, title, pitch, songNum } = songInfo;
 
         return (
             <Layout className="layout">
@@ -60,17 +85,11 @@ class Result extends React.Component {
                         className = "song-info"
                         title={songNum}
                         extra={<a href="#">More</a>}
-                        style={{ width: 170, marginTop: 16 }}
+                        style={{ width: 500, marginTop: 16 }}
                         actions={[
-                            <Popover title="dislike" trigger="click">
-                                <Button className="taste-button" type="text" icon={<FrownOutlined key="dislike" />}/>
-                            </Popover>,
-                            <Popover title="don't know" trigger="click">
-                                <Button className="taste-button" type="text" icon={<QuestionOutlined key="don't know" />}/>
-                            </Popover>,
-                            <Popover title="like" trigger="click">
-                                <Button className="taste-button" type="text" icon={<HeartOutlined key="like" />}/>
-                            </Popover>,
+                            <Button className="taste-button" type="text" icon={<FrownOutlined />}>Dislike</Button>,
+                            <Button className="taste-button" type="text" icon={<QuestionOutlined />}>No Clue</Button>,
+                            <Button className="taste-button" type="text" icon={<HeartOutlined />}>Like</Button>,
                         ]}
                     >
                         <Skeleton loading={loading} avatar active>
@@ -84,7 +103,40 @@ class Result extends React.Component {
                         </Skeleton>
                     </Card>
                     </div>
+
+                    <Modal
+                    title="Want to adjust the result?"
+                    visible={this.state.modal}
+                    onCancel = {this.handleModalChange}
+                    footer={[
+                        <Button key="update" type="primary" onClick={this.handleModalChange}>
+                        Update Song List
+                        </Button>,
+                        <Button key="weigth-control" type="primary" onClick={() => this.props.history.push("/weight")}>
+                        Control Weight
+                        </Button>
+                    ]}
+                    >
+                    <p>You can UPDATE the song list with new recommendation reflecting your feedback or CONTROL the weights of the recommendation</p>
+                    </Modal>
+
+                    <Drawer
+                        title="List of Likes"
+                        placement="left"
+                        closable={false}
+                        onClose={this.handleDrawerChange}
+                        visible={this.handleDrawerChange}
+                    >
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                        <p>Some contents...</p>
+                    </Drawer>
+
                 </Content>
+                <Footer>
+                    <Button className="show-like-button" type="primary" icon={<HeartOutlined />}>Like List</Button>
+                    <Button className="adjust-button" type="primary" onClick={this.handleModalChange}>Adjusting Results</Button>
+                </Footer>
             </Layout>
         )
     }
