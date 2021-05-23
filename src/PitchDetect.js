@@ -4,6 +4,8 @@ import { BrowserRouter as Router, withRouter } from "react-router-dom";
 import { Button, Typography, Progress, Space } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 
+import * as vocaliAPI from "./api/api.js";
+import Cookies from "universal-cookie";
 import "./css/pitch.css";
 
 const { Paragraph } = Typography;
@@ -14,9 +16,12 @@ class Pitch extends React.Component {
     let voice;
     let tuner;
     let animation;
+    let state;
     this.getPitch = this.getPitch.bind(this);
     this.logPitch = this.logPitch.bind(this);
     this.stopPitch = this.stopPitch.bind(this);
+    this.handleRecordChange = this.handleRecordChange.bind(this);
+    this.onNextClick = this.onNextClick.bind(this);
   }
 
   componentDidMount() {
@@ -25,9 +30,25 @@ class Pitch extends React.Component {
   }
 
   state = {
+    record: false,
+    disabled: true,
     currentPitch: "None",
     minPitch: [1000, "None"],
     maxPitch: [0, "None"],
+  };
+  handleRecordChange = () => {
+    this.setState({
+      record: !this.state.record,
+    });
+    if (!this.state.record) {
+      this.getPitch();
+    } else {
+      this.stopPitch();
+    }
+  };
+  bool2str = (bool) => {
+    if (bool) return "Stop";
+    else return "Record";
   };
 
   nextPath(path) {
@@ -46,6 +67,10 @@ class Pitch extends React.Component {
     console.log(this.tuner.pitch, this.tuner.noteName);
     if (this.tuner.noteName) {
       console.log(this.maxPitch);
+      if (this.state.disabled) {
+        this.setState({ disabled: false });
+      }
+
       if (this.tuner.pitch > this.state.maxPitch[0]) {
         this.maxPitch = this.tuner.pitch;
         this.setState({
@@ -70,6 +95,18 @@ class Pitch extends React.Component {
     cancelAnimationFrame(this.animation);
     this.voice.stop();
     this.tuner.stop();
+  }
+
+  onNextClick() {
+    const cookies = new Cookies();
+    const userid = cookies.get("id", { path: "/" });
+    const data = {
+      minPitch: this.state.minPitch[1],
+      maxPitch: this.state.maxPitch[1],
+    };
+    vocaliAPI.modifyUser(userid, data).then((response) => {
+      this.nextPath("/songpref");
+    });
   }
 
   render() {
@@ -112,18 +149,19 @@ class Pitch extends React.Component {
             Type="primary"
             Class="standard"
             State="normal"
-            onClick={this.getPitch}
+            onClick={this.handleRecordChange}
           >
-            RECORD
+            {this.bool2str(this.state.record)}
           </Button>
           <Button
             className="stop-button"
             Type="primary"
+            disabled={this.state.disabled || this.state.record}
             Class="standard"
             State="normal"
-            onClick={this.stopPitch}
+            onClick={this.onNextClick}
           >
-            STOP
+            NEXT
           </Button>
         </div>
       </div>
