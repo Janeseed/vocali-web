@@ -1,42 +1,31 @@
 import React from 'react';
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
     Link,
     withRouter
   } from "react-router-dom";
 
-import { Button, Typography, Input, InputNumber, Layout, Tag, Avatar } from 'antd';
-import { UserOutlined, LeftOutlined } from '@ant-design/icons';
+import { Button, Typography, Input, Skeleton, Switch, Card, Layout, Tag, Avatar, Row, Col } from 'antd';
+import { FrownOutlined, HeartOutlined, EditOutlined, QuestionOutlined, SettingOutlined } from '@ant-design/icons';
 
 import "./css/home.css";
 import Logo from "./vocali_logo2.svg";
 
 const { Header, Footer, Sider, Content } = Layout;
-const { CheckableTag } = Tag;
-const tagsData = ['Alone', 'Friends', 'Superior'];
-const tagsData2 = ['Happy', 'Exuberant', 'Frantic', 'Anxious/Sad', 'Calm', 'Contentment', 'Energetic', 'Depression'];
+const { Meta } = Card;
 
 class Result extends React.Component {
-    
     nextPath(path) {
         this.props.history.push(path);
     }
 
     state = {
-        selectedTags: [],
+        songList: [], loading: false,
     };
-
-    handleChange(tag, checked) {
-        const { selectedTags } = this.state;
-        const nextSelectedTags = checked ? [...selectedTags, tag] : selectedTags.filter(t => t !== tag);
-        console.log('You are interested in: ', nextSelectedTags);
-        this.setState({ selectedTags: nextSelectedTags });
-    }
     
     render() {
-        const { selectedTags } = this.state;
+        const { loading } = this.state;
 
         return (
             <Layout className="layout">
@@ -55,8 +44,110 @@ class Result extends React.Component {
                         </div>
                     </div>
                 </Header>
-                <Content style={{ textAlign: 'center' , backgroundColor: '#F6F0FE'}}>
-                    
+                <Content style={{ backgroundColor: '#F6F0FE'}}>
+                    <div className ="songs">
+                        <Row gutter={16}>
+                            <Col span={8}>
+                                <Card
+                                    className = "song-info"
+                                    style={{ width: 170, marginTop: 16 }}
+                                    actions={[
+                                        <FrownOutlined key="dislike" />,
+                                        <QuestionOutlined key="don't know" />,
+                                        <HeartOutlined key="like" />,
+                                    ]}
+                                >
+                                    <Skeleton loading={loading} avatar active>
+                                        <Meta
+                                            avatar={
+                                                <Avatar style={{ color: '#000000', backgroundColor: '#D9D9D9'}}>A#</Avatar>
+                                            }
+                                            title="Song Title"
+                                            description="Artist Name"
+                                        />
+                                    </Skeleton>
+                                </Card>
+                            </Col>
+                            <Col span={8}>
+                                <Card
+                                    className = "song-info"
+                                    style={{ width: 170, marginTop: 16 }}
+                                    actions={[
+                                        <FrownOutlined key="dislike" />,
+                                        <QuestionOutlined key="don't know" />,
+                                        <HeartOutlined key="like" />,
+                                    ]}
+                                >
+                                    <Skeleton loading={loading} avatar active>
+                                        <Meta
+                                            avatar={
+                                                <Avatar style={{ color: '#000000', backgroundColor: '#D9D9D9'}}>A#</Avatar>
+                                            }
+                                            title="Song Title"
+                                            description="Artist Name"
+                                        />
+                                    </Skeleton>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Card
+                            className = "song-info"
+                            style={{ width: 170, marginTop: 16 }}
+                            actions={[
+                                <FrownOutlined key="dislike" />,
+                                <QuestionOutlined key="don't know" />,
+                                <HeartOutlined key="like" />,
+                            ]}
+                        >
+                            <Skeleton loading={loading} avatar active>
+                                <Meta
+                                    avatar={
+                                        <Avatar style={{ color: '#000000', backgroundColor: '#D9D9D9'}}>A#</Avatar>
+                                    }
+                                    title="Song Title"
+                                    description="Artist Name"
+                                />
+                            </Skeleton>
+                        </Card>
+                        <Card
+                            className = "song-info"
+                            style={{ width: 170, marginTop: 16 }}
+                            actions={[
+                                <FrownOutlined key="dislike" />,
+                                <QuestionOutlined key="don't know" />,
+                                <HeartOutlined key="like" />,
+                            ]}
+                        >
+                            <Skeleton loading={loading} avatar active>
+                                <Meta
+                                    avatar={
+                                        <Avatar style={{ color: '#000000', backgroundColor: '#D9D9D9'}}>A#</Avatar>
+                                    }
+                                    title="Song Title"
+                                    description="Artist Name"
+                                />
+                            </Skeleton>
+                        </Card>
+                        <Card
+                            className = "song-info"
+                            style={{ width: 170, marginTop: 16 }}
+                            actions={[
+                                <FrownOutlined key="dislike" />,
+                                <QuestionOutlined key="don't know" />,
+                                <HeartOutlined key="like" />,
+                            ]}
+                        >
+                            <Skeleton loading={loading} avatar active>
+                                <Meta
+                                    avatar={
+                                        <Avatar style={{ color: '#000000', backgroundColor: '#D9D9D9'}}>A#</Avatar>
+                                    }
+                                    title="Song Title"
+                                    description="Artist Name"
+                                />
+                            </Skeleton>
+                        </Card>
+                    </div>
                 </Content>
             </Layout>
         )
