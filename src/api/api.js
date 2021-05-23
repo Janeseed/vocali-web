@@ -15,13 +15,11 @@ export const createUser = (name) =>
     name: name,
   });
 
-export const modifyUser = ({ id, data }) => {
+export const modifyUser = (id, data) =>
   auth.put(`/users/${id}`, {
-    name: data.name,
     minPitch: data.minPitch,
     maxPitch: data.maxPitch,
   });
-};
 
 export const selectSong = ({ userId, songId, category }) => {
   auth.post(`/users/${userId}/songs/select`, {
