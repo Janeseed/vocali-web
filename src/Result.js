@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Skeleton, Card, Layout, Avatar, Popover, Modal, Drawer } from "antd";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
 import {
   FrownOutlined,
   HeartOutlined,
@@ -10,10 +10,21 @@ import {
 
 import "./css/home.css";
 import "./css/result.css";
+import Cookies from "universal-cookie";
 import VocaliHeader from "./Header.js";
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
+const { CheckableTag } = Tag;
+
+
+const FeedbackTag = {
+  DislikeTag: 'Dislike',
+  NoClueTag: 'No Clue',
+  LikeTag: 'Like'
+};
+
+const tagData = ["dislike", "noclue", "ike"];
 
 class Result extends React.Component {
   nextPath(path) {
@@ -23,7 +34,15 @@ class Result extends React.Component {
   state = {
     songList: [],
     loading: false,
+    modal: false,
+    drawer: false,
+    selectedFeedback: "",
   };
+
+  handleSelectedFeedback(tag, checked) {
+    const nextSelectedFeedback = checked ? tag : "";
+    this.setState({ selectedFeedback: nextSelectedFeedback });
+  }
   
   handleModalChange = () => {
     this.setState({
@@ -32,11 +51,11 @@ class Result extends React.Component {
   };
 
   handleDrawerChange= () => {
-      this.setState({
-          drawer: !this.state.drawer,
-      });
+    this.setState({
+        drawer: !this.state.drawer,
+    });
   }
-
+  
   render() {
     const { loading } = this.state;
     const songInfo = {
@@ -50,6 +69,29 @@ class Result extends React.Component {
       songNum: "000000",
     };
     const { artist, title, pitch, songNum } = songInfo;
+    
+    function moreInfo() {
+      Modal.info({
+        title: 'The score of consideration',
+        content: (
+          <div>
+            <div className="score-div">
+              <p className="score-title">Pitch</p>
+              <p className="score">0</p>
+            </div>
+            <div className="score-div">
+              <p className="score-title">Song Preference</p>
+              <p className="score">0</p>
+            </div>
+            <div className="score-div">
+              <p className="score-title">Mood</p>
+              <p className="score">0</p>
+            </div>
+          </div>
+        ),
+        onOk() {},
+      });
+    }
 
     return (
       <Layout className="layout">
@@ -59,30 +101,30 @@ class Result extends React.Component {
             <Card
               className="song-info"
               title={songNum}
-              extra={<a href="#">More</a>}
-              style={{ width: 170, marginTop: 16 }}
+              extra={<Button type="link" onClick={moreInfo}>Explain</Button>}
+              style={{ width: 500, marginTop: 16 }}
               actions={[
-                <Popover title="dislike" trigger="click">
-                  <Button
-                    className="taste-button"
-                    type="text"
-                    icon={<FrownOutlined key="dislike" />}
-                  />
-                </Popover>,
-                <Popover title="don't know" trigger="click">
-                  <Button
-                    className="taste-button"
-                    type="text"
-                    icon={<QuestionOutlined key="don't know" />}
-                  />
-                </Popover>,
-                <Popover title="like" trigger="click">
-                  <Button
-                    className="taste-button"
-                    type="text"
-                    icon={<HeartOutlined key="like" />}
-                  />
-                </Popover>,
+                <CheckableTag
+                  key="dislike"
+                  checked={this.state.selectedFeedback === "dislike"}
+                  onChange={(checked) => this.handleSelectedFeedback("dislike", checked)}
+                >
+                  <FrownOutlined />Dislike
+                </CheckableTag>,
+                <CheckableTag
+                  key="noclue"
+                  checked={this.state.selectedFeedback === "noclue"}
+                  onChange={(checked) => this.handleSelectedFeedback("noclue", checked)}
+                >
+                  <QuestionOutlined />No Clue
+                </CheckableTag>,
+                <CheckableTag
+                  key="like"
+                  checked={this.state.selectedFeedback === "like"}
+                  onChange={(checked) => this.handleSelectedFeedback("like", checked)}
+                >
+                  <HeartOutlined /> Like
+                </CheckableTag>
               ]}
             >
               <Skeleton loading={loading} avatar active>
@@ -119,17 +161,19 @@ class Result extends React.Component {
           <Drawer
               title="List of Likes"
               placement="left"
-              closable={false}
+              closable={true}
               onClose={this.handleDrawerChange}
-              visible={this.handleDrawerChange}
+              visible={this.state.drawer}
           >
-              <p>Some contents...</p>
-              <p>Some contents...</p>
-              <p>Some contents...</p>
+              <Card sstyle={{ width: 170, height: 100 }}>
+                <p className="songNum">000000</p>
+                <p className="song-title">문어의 꿈</p>
+                <p className="artist">안예은</p>
+              </Card>
           </Drawer>
         </Content>
         <Footer>
-            <Button className="show-like-button" type="primary" icon={<HeartOutlined />}>Like List</Button>
+            <Button className="show-like-button" type="primary" icon={<HeartOutlined />} onClick={this.handleDrawerChange}>Like List</Button>
             <Button className="adjust-button" type="primary" onClick={this.handleModalChange}>Adjusting Results</Button>
         </Footer>
       </Layout>
