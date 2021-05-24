@@ -1,7 +1,16 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
+import {
+  Button,
+  Skeleton,
+  Card,
+  Layout,
+  Avatar,
+  Tag,
+  Modal,
+  Drawer,
+} from "antd";
 import {
   FrownOutlined,
   HeartOutlined,
@@ -10,18 +19,16 @@ import {
 
 import "./css/home.css";
 import "./css/result.css";
-import Cookies from "universal-cookie";
-import VocaliHeader from "./Header.js";
+import InfoHeader from "./InfoHeader.js";
 
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 const { CheckableTag } = Tag;
 
-
 const FeedbackTag = {
-  DislikeTag: 'Dislike',
-  NoClueTag: 'No Clue',
-  LikeTag: 'Like'
+  DislikeTag: "Dislike",
+  NoClueTag: "No Clue",
+  LikeTag: "Like",
 };
 
 const tagData = ["dislike", "noclue", "ike"];
@@ -43,19 +50,19 @@ class Result extends React.Component {
     const nextSelectedFeedback = checked ? tag : "";
     this.setState({ selectedFeedback: nextSelectedFeedback });
   }
-  
+
   handleModalChange = () => {
     this.setState({
       modal: !this.state.modal,
     });
   };
 
-  handleDrawerChange= () => {
+  handleDrawerChange = () => {
     this.setState({
-        drawer: !this.state.drawer,
+      drawer: !this.state.drawer,
     });
-  }
-  
+  };
+
   render() {
     const { loading } = this.state;
     const songInfo = {
@@ -69,10 +76,10 @@ class Result extends React.Component {
       songNum: "000000",
     };
     const { artist, title, pitch, songNum } = songInfo;
-    
+
     function moreInfo() {
       Modal.info({
-        title: 'The score of consideration',
+        title: "The score of consideration",
         content: (
           <div>
             <div className="score-div">
@@ -95,36 +102,48 @@ class Result extends React.Component {
 
     return (
       <Layout className="layout">
-        <VocaliHeader />
+        <InfoHeader />
         <Content style={{ backgroundColor: "#F6F0FE" }}>
           <div className="songs">
             <Card
               className="song-info"
               title={songNum}
-              extra={<Button type="link" onClick={moreInfo}>Explain</Button>}
+              extra={
+                <Button type="link" onClick={moreInfo}>
+                  Explain
+                </Button>
+              }
               style={{ width: 500, marginTop: 16 }}
               actions={[
                 <CheckableTag
                   key="dislike"
                   checked={this.state.selectedFeedback === "dislike"}
-                  onChange={(checked) => this.handleSelectedFeedback("dislike", checked)}
+                  onChange={(checked) =>
+                    this.handleSelectedFeedback("dislike", checked)
+                  }
                 >
-                  <FrownOutlined />Dislike
+                  <FrownOutlined />
+                  Dislike
                 </CheckableTag>,
                 <CheckableTag
                   key="noclue"
                   checked={this.state.selectedFeedback === "noclue"}
-                  onChange={(checked) => this.handleSelectedFeedback("noclue", checked)}
+                  onChange={(checked) =>
+                    this.handleSelectedFeedback("noclue", checked)
+                  }
                 >
-                  <QuestionOutlined />No Clue
+                  <QuestionOutlined />
+                  No Clue
                 </CheckableTag>,
                 <CheckableTag
                   key="like"
                   checked={this.state.selectedFeedback === "like"}
-                  onChange={(checked) => this.handleSelectedFeedback("like", checked)}
+                  onChange={(checked) =>
+                    this.handleSelectedFeedback("like", checked)
+                  }
                 >
                   <HeartOutlined /> Like
-                </CheckableTag>
+                </CheckableTag>,
               ]}
             >
               <Skeleton loading={loading} avatar active>
@@ -143,38 +162,62 @@ class Result extends React.Component {
             </Card>
           </div>
           <Modal
-          title="Want to adjust the result?"
-          visible={this.state.modal}
-          onCancel = {this.handleModalChange}
-          footer={[
-              <Button key="update" type="primary" onClick={this.handleModalChange}>
-              Update Song List
+            title="Want to adjust the result?"
+            visible={this.state.modal}
+            onCancel={this.handleModalChange}
+            footer={[
+              <Button
+                key="update"
+                type="primary"
+                onClick={this.handleModalChange}
+              >
+                Update Song List
               </Button>,
-              <Button key="weigth-control" type="primary" onClick={() => this.props.history.push("/weight")}>
-              Control Weight
-              </Button>
-          ]}
+              <Button
+                key="weigth-control"
+                type="primary"
+                onClick={() => this.props.history.push("/weight")}
+              >
+                Control Weight
+              </Button>,
+            ]}
           >
-          <p>You can UPDATE the song list with new recommendation reflecting your feedback or CONTROL the weights of the recommendation</p>
+            <p>
+              You can UPDATE the song list with new recommendation reflecting
+              your feedback or CONTROL the weights of the recommendation
+            </p>
           </Modal>
 
           <Drawer
-              title="List of Likes"
-              placement="left"
-              closable={true}
-              onClose={this.handleDrawerChange}
-              visible={this.state.drawer}
+            title="List of Likes"
+            placement="left"
+            closable={true}
+            onClose={this.handleDrawerChange}
+            visible={this.state.drawer}
           >
-              <Card sstyle={{ width: 170, height: 100 }}>
-                <p className="songNum">000000</p>
-                <p className="song-title">문어의 꿈</p>
-                <p className="artist">안예은</p>
-              </Card>
+            <Card sstyle={{ width: 170, height: 100 }}>
+              <p className="songNum">000000</p>
+              <p className="song-title">문어의 꿈</p>
+              <p className="artist">안예은</p>
+            </Card>
           </Drawer>
         </Content>
         <Footer>
-            <Button className="show-like-button" type="primary" icon={<HeartOutlined />} onClick={this.handleDrawerChange}>Like List</Button>
-            <Button className="adjust-button" type="primary" onClick={this.handleModalChange}>Adjusting Results</Button>
+          <Button
+            className="show-like-button"
+            type="primary"
+            icon={<HeartOutlined />}
+            onClick={this.handleDrawerChange}
+          >
+            Like List
+          </Button>
+          <Button
+            className="adjust-button"
+            type="primary"
+            onClick={this.handleModalChange}
+          >
+            Adjusting Results
+          </Button>
         </Footer>
       </Layout>
     );

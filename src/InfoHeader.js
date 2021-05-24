@@ -7,7 +7,7 @@ import Cookies from "universal-cookie";
 
 const { Header } = Layout;
 
-const VocaliHeader = ({ people, mood }) => {
+const InfoHeader = ({ people, mood }) => {
   const [selectedPeople, setPeople] = useState(people);
   const [selectedMood, setMood] = useState(mood);
   const cookies = new Cookies();
@@ -41,4 +41,4 @@ const VocaliHeader = ({ people, mood }) => {
   );
 };
 
-export default withRouter(VocaliHeader);
+export default withRouter(InfoHeader);

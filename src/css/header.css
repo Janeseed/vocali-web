@@ -1,0 +1,25 @@
+.navbar {
+  position: relative;
+  padding: 1rem 1rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.logo {
+  display: inline-block;
+  padding-top: 0.3125rem;
+  padding-bottom: 0.3125rem;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  line-height: inherit;
+  white-space: nowrap;
+
+  height: 3rem;
+}

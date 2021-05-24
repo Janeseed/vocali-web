@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Typography, Input, Modal } from "antd";
-import { ApiFilled, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
 import "./css/start.css";
 
 import * as vocaliAPI from "./api/api.js";
 import Cookies from "universal-cookie";
+import SimpleHeader from "./SimpleHeader";
 
 const { Paragraph } = Typography;
 
@@ -34,27 +35,30 @@ class InfoSet extends React.Component {
   setInfo = () => {
     const name = this.state.name;
     const age = this.state.age;
-    if (name === "" || age === "") {
+    if (name === "" || age === "" || isNaN(age)) {
       this.handleModalChange();
       return;
     }
-    vocaliAPI.createUser(name).then((response) => {
+    vocaliAPI.createUser(name, age).then((response) => {
       const userId = response.data.id;
       const cookies = new Cookies();
       cookies.set("id", userId, { path: "/" });
+      cookies.remove("mood", { path: "/" });
+      cookies.remove("people", { path: "/" });
       this.props.history.push("/pitch");
     });
   };
 
   render() {
     return (
-      <div>
+      <>
+        <SimpleHeader back="none" />
         <Paragraph className="description">
           First,<br></br> Put your brief information
         </Paragraph>
         <div className="inputs">
-          <div className="name-div">
-            <p className="subtitle">Name</p>
+          <div className="input-div">
+            <div className="subtitle">Name</div>
             <Input
               className="name-input"
               size="large"
@@ -63,8 +67,8 @@ class InfoSet extends React.Component {
               onChange={this.handleNameChange}
             />
           </div>
-          <div className="age-div">
-            <p className="subtitle">Age</p>
+          <div className="input-div">
+            <div className="subtitle">Age</div>
             <Input
               className="age-input"
               size="large"
@@ -93,9 +97,12 @@ class InfoSet extends React.Component {
             </Button>,
           ]}
         >
-          <p>You should fill out your name and age :)</p>
+          <p>
+            You should fill out your name and age. Also your age should be valid
+            number :)
+          </p>
         </Modal>
-      </div>
+      </>
     );
   }
 }

@@ -1,35 +1,38 @@
-import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    withRouter
-  } from "react-router-dom";
-
-import { Button, Typography, Input, InputNumber, Layout, Checkbox, Space } from 'antd';
-import { UserOutlined, LeftOutlined } from '@ant-design/icons';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { Button, Typography } from "antd";
 
 import "./css/start.css";
-import Logo from "./vocali_logo2.svg";
+import SimpleHeader from "./SimpleHeader";
 
 const { Paragraph } = Typography;
 
 class Start extends React.Component {
+  nextPath(path) {
+    this.props.history.push(path);
+  }
 
-    nextPath(path) {
-        this.props.history.push(path);
-    }
-
-    render() {
-        return (
-            <div>
-                <img className="App-logo" src={Logo} alt="Vocali Logo"/>
-                <Paragraph className="text1" >Vocali will find you a perfect song to sing at Noraebang</Paragraph>
-                <Button className="start-button" onClick={() => this.nextPath("/info")} Type="primary" Class="circle" State="hover or pressed">START</Button>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <>
+        <SimpleHeader />
+        <div class="row-flex-container">
+          <Paragraph className="slogan">
+            Vocali will find you a perfect song to sing at Noraebang
+          </Paragraph>
+          <Button
+            className="start-button"
+            onClick={() => this.nextPath("/info")}
+            Type="primary"
+            Class="circle"
+            State="hover or pressed"
+          >
+            START
+          </Button>
+        </div>
+      </>
+    );
+  }
 }
 
 export default withRouter(Start);

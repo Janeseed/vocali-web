@@ -1,9 +1,9 @@
 import React from "react";
 import Wad from "web-audio-daw";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
-import { Button, Typography, Progress, Space } from "antd";
-import { LeftOutlined } from "@ant-design/icons";
+import { withRouter } from "react-router-dom";
+import { Button, Typography, Divider } from "antd";
 
+import SimpleHeader from "./SimpleHeader";
 import * as vocaliAPI from "./api/api.js";
 import Cookies from "universal-cookie";
 import "./css/pitch.css";
@@ -33,7 +33,7 @@ class Pitch extends React.Component {
     record: false,
     disabled: true,
     currentPitch: "None",
-    minPitch: [1000, "None"],
+    minPitch: [10000, "None"],
     maxPitch: [0, "None"],
   };
   handleRecordChange = () => {
@@ -66,11 +66,10 @@ class Pitch extends React.Component {
   logPitch() {
     console.log(this.tuner.pitch, this.tuner.noteName);
     if (this.tuner.noteName) {
-      console.log(this.maxPitch);
+      console.log(this.state.minPitch[0]);
       if (this.state.disabled) {
         this.setState({ disabled: false });
       }
-
       if (this.tuner.pitch > this.state.maxPitch[0]) {
         this.maxPitch = this.tuner.pitch;
         this.setState({
@@ -111,35 +110,26 @@ class Pitch extends React.Component {
 
   render() {
     return (
-      <div className="Pitch-app">
-        <Button
-          className="return-button"
-          onClick={() => this.nextPath("/info")}
-          Type="text"
-          Class="standard"
-          State="normal"
-          icon={<LeftOutlined />}
-        >
-          Back
-        </Button>
-        <Space direction="vertical">
-          <Paragraph className="description2">
-            Click the botton to record your voice
-          </Paragraph>
-        </Space>
+      <>
+        <SimpleHeader back="/info" />
+        <Paragraph className="description">
+          Click the button <br />
+          to record your voice
+        </Paragraph>
         <div className="pitches">
           <div className="currentpitches">
             Current Pitch
             <div className="pitchDisplay">{this.state.currentPitch}</div>
           </div>
+          <Divider />
           <div className="maxminpitches">
-            <div>
-              Max Pitch
-              <div className="pitchDisplay">{this.state.maxPitch[1]}</div>
-            </div>
             <div>
               Min Pitch
               <div className="pitchDisplay">{this.state.minPitch[1]}</div>
+            </div>
+            <div>
+              Max Pitch
+              <div className="pitchDisplay">{this.state.maxPitch[1]}</div>
             </div>
           </div>
         </div>
@@ -164,7 +154,7 @@ class Pitch extends React.Component {
             NEXT
           </Button>
         </div>
-      </div>
+      </>
     );
   }
 }
