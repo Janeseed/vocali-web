@@ -24,7 +24,7 @@ const InfoHeader = ({ people, mood }) => {
       setName(res.data.name);
       setPitch(res.data.minPitch + " - " + res.data.maxPitch);
     });
-  }, [cookies]);
+  }, []);
 
   useEffect(() => {
     if (people && mood) {
