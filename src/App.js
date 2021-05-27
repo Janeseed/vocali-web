@@ -13,13 +13,6 @@ function App() {
   return (
     <Router>
       <div>
-        {/*
-                <NavLink exact activeClassName="active" to="/">Start</NavLink>
-                <NavLink activeClassName="active" to="/info">Information Setting</NavLink>
-                <NavLink activeClassName="active" to="/songpref">Song Preference</NavLink>
-                <NavLink activeClassName="active" to="/pitch">Pitch Detector</NavLink>
-                */}
-
         <Switch>
           <Route exact path="/" component={Start} />
           <Route exact path="/home" component={Home} />

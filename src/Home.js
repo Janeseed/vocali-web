@@ -1,13 +1,13 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Layout, Tag, Avatar, Divider } from "antd";
+import { Button, Layout, Tag, Divider } from "antd";
 
 import "./css/home.css";
 import Cookies from "universal-cookie";
-import VocaliHeader from "./Header.js";
+import InfoHeader from "./InfoHeader.js";
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { CheckableTag } = Tag;
 const tagsData = ["Alone", "Friends", "Superior"];
 const tagsData2 = ["Happy", "Energetic", "Depression", "Calm"];
@@ -52,7 +52,7 @@ class Home extends React.Component {
   render() {
     return (
       <Layout className="layout">
-        <VocaliHeader
+        <InfoHeader
           people={this.state.selectedPeople}
           mood={this.state.selectedMood}
         />

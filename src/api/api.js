@@ -2,7 +2,6 @@ import axios from "axios";
 
 const auth = axios.create({
   baseURL: "https://lit-eyrie-97447.herokuapp.com",
-  //   withCredentials: true,
   headers: {
     "Content-type": "application/json",
   },
@@ -10,9 +9,10 @@ const auth = axios.create({
 
 export const getUser = (id) => auth.get(`/users/${id}`);
 
-export const createUser = (name) =>
+export const createUser = (name, age) =>
   auth.post(`/users`, {
     name: name,
+    age: age * 1,
   });
 
 export const modifyUser = (id, data) =>
@@ -21,11 +21,21 @@ export const modifyUser = (id, data) =>
     maxPitch: data.maxPitch,
   });
 
-export const selectSong = ({ userId, songId, category }) => {
-  auth.post(`/users/${userId}/songs/select`, {
-    id: songId,
-    category: category,
-  });
+export const selectSong = (userId, songs, category) => {
+  let postList = [];
+  songs.map((song) =>
+    postList.push({
+      id: song.id,
+      category: category,
+    })
+  );
+
+  const data = JSON.stringify(postList);
+  const config = {
+    headers: { "Content-Type": "application/json" },
+  };
+  console.log(data);
+  return auth.post(`/users/${userId}/songs/select`, data, config);
 };
 
 export const getEvaluation = ({ userId }) => {

@@ -5,119 +5,6 @@
   background: #fafafa;
 }
 
-.App-logo {
-  position: absolute;
-  width: 112px;
-  height: 30px;
-  left: 29px;
-  top: 27px;
-}
-
-.user-info {
-  position: absolute;
-  right: 19px;
-  top: 23px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.avatar {
-  width: 40px;
-  height: 42px;
-  margin: 0 5px;
-
-  /* Subheading 16 / medium */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-  /* or 150% */
-
-  display: flex;
-  align-items: center;
-  text-align: center;
-
-  /* Character / Title .85 */
-  color: rgba(0, 0, 0, 0.85);
-}
-
-.age-info,
-.pitch-info {
-  width: 51px;
-  height: 35px;
-
-  background: #666666;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 4px;
-
-  /* Auto Layout */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 21px;
-
-  color: #ffffff;
-}
-
-.mood-dashboard {
-  position: absolute;
-  width: 349px;
-  height: 52px;
-  left: calc(50% - 349px / 2 + 1px);
-  top: 84px;
-
-  background: #f2f2f2;
-  border-radius: 7px;
-
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.mood-title {
-  flex: none;
-  order: 0;
-  margin: 19px 21px;
-
-  /* Subheading 16 / medium */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 168x;
-
-  /* Character / Title .85 */
-  color: rgba(0, 0, 0, 0.85);
-}
-
-.mood-title-chosen {
-  flex: none;
-  order: 0;
-  margin: 19px 21px;
-
-  /* Subheading 16 / medium */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 168x;
-
-  /* Character */
-  color: #6200ee;
-}
-
-.chosen-info {
-  display: flex;
-  align-items: center;
-}
-
 .whom-info,
 .mood-info {
   width: 75px;
@@ -146,18 +33,14 @@
 }
 
 .selection-board {
-  /* Auto Layout */
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 27px 32px;
-
-  position: absolute;
+  margin: auto;
+  margin-top: 40px;
+  padding-bottom: 48px;
   width: 315px;
-  height: 447px;
-  left: calc(50% - 315px / 2 - 2px);
-  top: 176px;
-
   background: rgba(98, 0, 238, 0.06);
   border-radius: 17px;
 }
@@ -184,33 +67,21 @@
 }
 
 .find-button {
-  /* Auto Layout */
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px 16px;
 
   position: absolute;
   width: 306px;
   height: 62px;
   left: calc(50% - 306px / 2 - 1.5px);
   bottom: 10vw;
-
-  /* vocali_purple */
   background: #6200ee;
-
-  /* drop-shadow / button-primary */
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
   border-radius: 5px;
 
-  /* Heading 24 / bold */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: bold;
   font-size: 24px;
-  line-height: 32px;
-
-  /* Character / Primary(inverse) */
   color: #ffffff;
 }

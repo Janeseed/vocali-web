@@ -1,24 +1,29 @@
 .songs {
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start;
-
-  width: 98vw;
-  left: calc(50% - 98vw/2);
+  margin: 0 16px;
+  padding: 16px 0;
+  flex-direction: column;
+  align-items: center;
 }
 
 .song-info {
-  margin: 1vw;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-sizing: border-box;
-  box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  box-shadow: 0px 0px 6px rgb(0 0 0 / 15%);
   border-radius: 7px;
+  margin-bottom: 12px;
 }
 
 .taste-button {
   align-content: center;
 }
 
-.socre-div{
+.socre-div {
   align-items: flex-start;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
