@@ -19,7 +19,7 @@ class Result extends React.Component {
   }
 
   userActions = [
-    { name: "dislike", displayName: "Display", icon: <FrownOutlined /> },
+    { name: "dislike", displayName: "Dislike", icon: <FrownOutlined /> },
     { name: "noclue", displayName: "No clue", icon: <QuestionOutlined /> },
     { name: "like", displayName: "Like", icon: <HeartOutlined /> },
   ];
@@ -87,8 +87,6 @@ class Result extends React.Component {
   handleSelectedFeedback(tag, checked, songid) {
     if (checked) {
       this.setState({ feedbacks: this.state.feedbacks.set(songid, tag) });
-    } else {
-      this.setState({ feedbacks: this.state.feedbacks.delete(songid) });
     }
     console.log(this.state.feedbacks);
   }
