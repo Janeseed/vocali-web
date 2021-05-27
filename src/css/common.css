@@ -1,5 +1,6 @@
 @import "~antd/dist/antd.css";
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600&display=swap");
 
 .App {
   text-align: center;
@@ -32,10 +33,11 @@
 
 .slogan {
   /* Subheading 16 / regular */
-  font-family: "Nanum Gothic", sans-serif;
+  font-family: "Caveat", cursive;
   font-style: normal;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 36px;
+  line-height: 48px;
 
   /* or 150% */
   text-align: center;
@@ -44,6 +46,12 @@
 
   /* Character / Title .85 */
   color: rgba(0, 0, 0, 0.85);
+}
+
+.highlight {
+  display: inline;
+  box-shadow: inset 0 -20px 0 #e6d9fc;
+  /*-10px은 highlight의 두께*/
 }
 
 .start-button {
@@ -192,47 +200,29 @@
   bottom: 112px;
 }
 
-.record-button,
-.stop-button {
-  /* Auto Layout */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 16px;
-
-  width: 118px;
-  height: 48px;
-
-  /* drop-shadow / button-primary */
-  box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
-  border-radius: 5px;
-
-  /* Heading 24 / bold */
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 32px;
-
-  /* Character / Primary(inverse) */
-  color: #ffffff;
-}
-
-.record-button {
-  /* vocali_purple */
-  background: #6200ee;
-}
-
-.stop-button {
-  /* vocali_pink */
-  background: #ee009d;
-}
-
 .return-button {
   position: absolute;
   left: 20px;
   top: 28px;
   font-size: 30px;
   color: #6200ee;
+}
+
+.space-div {
+  margin-top: 5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.vocali-footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background: white;
+  padding: 24px 32px;
+  border-top: 1px solid #20005299;
+  box-shadow: 0px 0px 6px rgb(0 0 0 / 15%);
 }

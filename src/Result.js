@@ -1,81 +1,108 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import {
-  Button,
-  Skeleton,
-  Card,
-  Layout,
-  Avatar,
-  Tag,
-  Modal,
-  Drawer,
-} from "antd";
-import {
-  FrownOutlined,
-  HeartOutlined,
-  QuestionOutlined,
-} from "@ant-design/icons";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
+import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
 import "./css/result.css";
 import InfoHeader from "./InfoHeader.js";
+import * as vocaliAPI from "./api/api.js";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 const { Meta } = Card;
 const { CheckableTag } = Tag;
-
-const FeedbackTag = {
-  DislikeTag: "Dislike",
-  NoClueTag: "No Clue",
-  LikeTag: "Like",
-};
-
-const tagData = ["dislike", "noclue", "ike"];
 
 class Result extends React.Component {
   nextPath(path) {
     this.props.history.push(path);
   }
 
+  userActions = [
+    { name: "dislike", displayName: "Display", icon: <FrownOutlined /> },
+    { name: "noclue", displayName: "No clue", icon: <QuestionOutlined /> },
+    { name: "like", displayName: "Like", icon: <HeartOutlined /> },
+  ];
+
   state = {
-    songList: [],
+    songList: [
+      {
+        id: "x1yk42m_99d",
+        title: "문어의 꿈",
+        artist: "안예은",
+        publishedYear: 2021,
+        genre: "Dance",
+        mood: "happy",
+        pitch: "A#",
+        songNum: 48394,
+      },
+      {
+        id: "1hOEq5q9L41E2YbLhVvW5x",
+        title: '아로하(드라마 "슬기로운 의사 생활")',
+        artist: "조정석",
+        publishedYear: 2020,
+        genre: "Ballad",
+        mood: "energetic",
+        pitch: "A#",
+        songNum: 27615,
+      },
+      {
+        id: "x1yk42m_99d",
+        title: "문어의 꿈",
+        artist: "안예은",
+        publishedYear: 2021,
+        genre: "Dance",
+        mood: "happy",
+        pitch: "A#",
+        songNum: 48394,
+      },
+      {
+        id: "1hOEq5q9L41E2YbLhVvW5x",
+        title: '아로하(드라마 "슬기로운 의사 생활")',
+        artist: "조정석",
+        publishedYear: 2020,
+        genre: "Ballad",
+        mood: "energetic",
+        pitch: "A#",
+        songNum: 27615,
+      },
+      {
+        id: "x1yk42m_99d",
+        title: "문어의 꿈",
+        artist: "안예은",
+        publishedYear: 2021,
+        genre: "Dance",
+        mood: "happy",
+        pitch: "A#",
+        songNum: 48394,
+      },
+    ],
+    feedbacks: new Map(),
     loading: false,
     modal: false,
     drawer: false,
     selectedFeedback: "",
   };
 
-  handleSelectedFeedback(tag, checked) {
-    const nextSelectedFeedback = checked ? tag : "";
-    this.setState({ selectedFeedback: nextSelectedFeedback });
+  handleSelectedFeedback(tag, checked, songid) {
+    if (checked) {
+      this.setState({ feedbacks: this.state.feedbacks.set(songid, tag) });
+    } else {
+      this.setState({ feedbacks: this.state.feedbacks.delete(songid) });
+    }
+    console.log(this.state.feedbacks);
   }
 
   handleModalChange = () => {
-    this.setState({
-      modal: !this.state.modal,
-    });
+    this.setState({ modal: !this.state.modal });
   };
 
   handleDrawerChange = () => {
-    this.setState({
-      drawer: !this.state.drawer,
-    });
+    this.setState({ drawer: !this.state.drawer });
   };
 
   render() {
     const { loading } = this.state;
-    const songInfo = {
-      id: "x1yk42m_99d",
-      title: "문어의 꿈",
-      artist: "안예은",
-      publishedYear: 2021,
-      genre: "Dance",
-      mood: "happy",
-      pitch: "A#",
-      songNum: "000000",
-    };
-    const { artist, title, pitch, songNum } = songInfo;
 
     function moreInfo() {
       Modal.info({
@@ -101,76 +128,58 @@ class Result extends React.Component {
     }
 
     return (
-      <Layout className="layout">
+      <>
         <InfoHeader />
         <Content style={{ backgroundColor: "#F6F0FE" }}>
           <div className="songs">
-            <Card
-              className="song-info"
-              title={songNum}
-              extra={
-                <Button type="link" onClick={moreInfo}>
-                  Explain
-                </Button>
-              }
-              style={{ width: 500, marginTop: 16 }}
-              actions={[
-                <CheckableTag
-                  key="dislike"
-                  checked={this.state.selectedFeedback === "dislike"}
-                  onChange={(checked) =>
-                    this.handleSelectedFeedback("dislike", checked)
-                  }
-                >
-                  <FrownOutlined />
-                  Dislike
-                </CheckableTag>,
-                <CheckableTag
-                  key="noclue"
-                  checked={this.state.selectedFeedback === "noclue"}
-                  onChange={(checked) =>
-                    this.handleSelectedFeedback("noclue", checked)
-                  }
-                >
-                  <QuestionOutlined />
-                  No Clue
-                </CheckableTag>,
-                <CheckableTag
-                  key="like"
-                  checked={this.state.selectedFeedback === "like"}
-                  onChange={(checked) =>
-                    this.handleSelectedFeedback("like", checked)
-                  }
-                >
-                  <HeartOutlined /> Like
-                </CheckableTag>,
-              ]}
-            >
-              <Skeleton loading={loading} avatar active>
-                <Meta
-                  avatar={
-                    <Avatar
-                      style={{ color: "#000000", backgroundColor: "#D9D9D9" }}
-                    >
-                      {pitch}
-                    </Avatar>
-                  }
-                  title={title}
-                  description={artist}
-                />
-              </Skeleton>
-            </Card>
+            {this.state.songList.map((song) => (
+              <Card
+                className="song-info"
+                title={song.songNum}
+                extra={
+                  <Button type="link" onClick={moreInfo}>
+                    Explain
+                  </Button>
+                }
+                actions={this.userActions.map((userAction) => (
+                  <CheckableTag
+                    key={userAction.name}
+                    checked={this.state.feedbacks.get(song.id) === userAction.name}
+                    onChange={(checked) =>
+                      this.handleSelectedFeedback(userAction.name, checked, song.id)
+                    }
+                  >
+                    {userAction.icon}
+                    <span></span>
+                    {userAction.displayName}
+                  </CheckableTag>
+                ))}
+              >
+                <Skeleton loading={loading} avatar active>
+                  <Meta
+                    avatar={
+                      <Avatar
+                        style={{
+                          color: "#000000",
+                          backgroundColor: "#D9D9D9",
+                        }}
+                      >
+                        {song.pitch}
+                      </Avatar>
+                    }
+                    title={song.title}
+                    description={song.artist}
+                  />
+                </Skeleton>
+              </Card>
+            ))}
           </div>
           <Modal
             title="Want to adjust the result?"
             visible={this.state.modal}
             onCancel={this.handleModalChange}
             footer={[
-              <Button
-                key="update"
-                type="primary"
-                onClick={this.handleModalChange}
-              >
+              <Button key="update" type="primary" onClick={this.handleModalChange}>
                 Update Song List
               </Button>,
               <Button
@@ -183,8 +192,9 @@ class Result extends React.Component {
             ]}
           >
             <p>
-              You can UPDATE the song list with new recommendation reflecting
-              your feedback or CONTROL the weights of the recommendation
+              You can (1) UPDATE the song list with new recommendation reflecting your feedback or
+              <br />
+              (2) CONTROL the weights of the recommendation
             </p>
           </Modal>
 
@@ -195,31 +205,29 @@ class Result extends React.Component {
             onClose={this.handleDrawerChange}
             visible={this.state.drawer}
           >
-            <Card sstyle={{ width: 170, height: 100 }}>
+            <Card style={{ width: 170, height: 100 }}>
               <p className="songNum">000000</p>
               <p className="song-title">문어의 꿈</p>
               <p className="artist">안예은</p>
             </Card>
           </Drawer>
         </Content>
-        <Footer>
-          <Button
-            className="show-like-button"
-            type="primary"
-            icon={<HeartOutlined />}
-            onClick={this.handleDrawerChange}
-          >
-            Like List
-          </Button>
-          <Button
-            className="adjust-button"
-            type="primary"
-            onClick={this.handleModalChange}
-          >
-            Adjusting Results
-          </Button>
+        <Footer class="vocali-footer">
+          <div class="buttons">
+            <Button
+              className="show-like-button"
+              type="primary"
+              icon={<HeartOutlined />}
+              onClick={this.handleDrawerChange}
+            >
+              Like List
+            </Button>
+            <Button className="adjust-button" type="primary" onClick={this.handleModalChange}>
+              Adjusting Results
+            </Button>
+          </div>
         </Footer>
-      </Layout>
+      </>
     );
   }
 }

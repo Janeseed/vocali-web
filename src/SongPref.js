@@ -5,8 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import * as vocaliAPI from "./api/api.js";
 import Cookies from "universal-cookie";
-import "./css/start.css";
-import "./css/songpref.css";
+import "./css/common.css";
 import songlist from "./static/songPref.json";
 import SimpleHeader from "./SimpleHeader";
 

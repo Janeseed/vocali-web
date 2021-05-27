@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Typography, Input, Modal } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
-import "./css/start.css";
+import "./css/common.css";
 
 import * as vocaliAPI from "./api/api.js";
 import Cookies from "universal-cookie";

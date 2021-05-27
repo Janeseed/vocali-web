@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { Button, Typography } from "antd";
 
-import "./css/start.css";
+import "./css/common.css";
 import SimpleHeader from "./SimpleHeader";
 
 const { Paragraph } = Typography;
@@ -15,10 +15,11 @@ class Start extends React.Component {
   render() {
     return (
       <>
-        <SimpleHeader />
+        <SimpleHeader back="none" />
         <div class="row-flex-container">
           <Paragraph className="slogan">
-            Vocali will find you a perfect song to sing at Noraebang
+            Vocali will find you a{" "}
+            <span className="highlight">perfect song to sing at Noraebang</span>
           </Paragraph>
           <Button
             className="start-button"
