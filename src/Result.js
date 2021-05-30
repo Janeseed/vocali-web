@@ -1,5 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import queryString from "query-string";
+import Cookies from "universal-cookie";
 
 import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
 import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
@@ -47,17 +49,7 @@ class Result extends React.Component {
         songNum: 27615,
       },
       {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
-      },
-      {
-        id: "1hOEq5q9L41E2YbLhVvW5x",
+        id: "1hOEq5q9L41E2YbLhVvWx",
         title: '아로하(드라마 "슬기로운 의사 생활")',
         artist: "조정석",
         publishedYear: 2020,
@@ -65,16 +57,6 @@ class Result extends React.Component {
         mood: "energetic",
         pitch: "A#",
         songNum: 27615,
-      },
-      {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
       },
     ],
     feedbacks: new Map(),
@@ -98,6 +80,16 @@ class Result extends React.Component {
   handleDrawerChange = () => {
     this.setState({ drawer: !this.state.drawer });
   };
+
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search);
+    const cookies = new Cookies();
+    const userId = cookies.get("id", { path: "/" });
+    // vocaliAPI.getRecommendation(userId, values.mood + "," + values.people).then((result) => {
+    //   console.log(result);
+    // });
+    // TODO: Input 받아서 this.state.songList에 넣기
+  }
 
   render() {
     const { loading } = this.state;

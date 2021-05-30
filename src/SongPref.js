@@ -64,7 +64,6 @@ class SongPref extends React.Component {
             ))}
           </Space>
         </div>
-
         <Button
           className="next-button"
           onClick={() => this.onNextClick(this.state.selectedSongs)}

@@ -38,10 +38,7 @@ export const selectSong = (userId, songs, category) => {
   return auth.post(`/users/${userId}/songs/select`, data, config);
 };
 
-export const getEvaluation = ({ userId }) => {
-  auth.get(`/users/${userId}/songs/select`);
-};
+export const getEvaluation = (userId) => auth.get(`/users/${userId}/songs/select`);
 
-export const getRecommendation = ({ userId, moods }) => {
+export const getRecommendation = (userId, moods) =>
   auth.get(`/users/${userId}/recomendations?moods=` + moods);
-};
