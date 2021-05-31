@@ -54,10 +54,7 @@ class Home extends React.Component {
   render() {
     return (
       <Layout className="layout">
-        <InfoHeader
-          people={this.state.selectedPeople}
-          mood={this.state.selectedMood}
-        />
+        <InfoHeader people={this.state.selectedPeople} mood={this.state.selectedMood} />
         <Content style={{ backgroundColor: "#ffffff" }}>
           <div className="selection-board">
             <div className="mood-selection">
@@ -96,7 +93,11 @@ class Home extends React.Component {
           </div>
           <Button
             className="find-button"
-            onClick={() => this.nextPath("/result")}
+            onClick={() =>
+              this.nextPath(
+                "/result?people=" + this.state.selectedPeople + "&mood=" + this.state.selectedMood
+              )
+            }
             Type="primary"
             Class="standard"
             State="normal"

@@ -1,5 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import queryString from "query-string";
+import Cookies from "universal-cookie";
 
 import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider, Slider } from "antd";
 import { FrownOutlined, HeartOutlined, QuestionOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
@@ -89,6 +91,16 @@ class Result extends React.Component {
       songPrefWeight: value,
     });
   };
+
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search);
+    const cookies = new Cookies();
+    const userId = cookies.get("id", { path: "/" });
+    // vocaliAPI.getRecommendation(userId, values.mood + "," + values.people).then((result) => {
+    //   console.log(result);
+    // });
+    // TODO: Input 받아서 this.state.songList에 넣기
+  }
 
   render() {
     const { loading, moodWeight, pitchWeight, songPrefWeight } = this.state;
