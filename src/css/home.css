@@ -19,10 +19,6 @@
 }
 
 .mood-selection {
-  width: 251px;
-
-  font-family: Roboto;
-  font-style: normal;
   font-weight: 500;
   font-size: 24px;
   line-height: 28px;
@@ -32,8 +28,6 @@
 }
 
 .question {
-  font-family: Roboto;
-  font-style: normal;
   font-weight: 700;
   font-size: 16px;
   color: #000000;
@@ -52,11 +46,9 @@
 }
 
 .checkable-tags {
-  font-family: Roboto;
   font-style: normal;
   font-weight: 400;
-  font-size: 1.1rem;
-
+  font-size: 15px;
   margin: 0.3rem;
 }
 
@@ -78,21 +70,4 @@
   font-weight: 600;
   font-size: 24px;
   color: #ffffff;
-}
-
-.vocali-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 5vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 24px 16px;
-
-  background: white;
-  border-top: 1px solid #20005299;
-  box-shadow: 0px 0px 6px rgb(0 0 0 / 15%);
 }
