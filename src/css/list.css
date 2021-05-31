@@ -15,8 +15,7 @@
   top: 150px;
   left: 0;
   right: 0;
-  bottom: 8vh;
-  position: absolute;
+  bottom: 5vh;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #f6f0fe;

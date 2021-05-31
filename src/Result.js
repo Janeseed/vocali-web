@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Cookies from "universal-cookie";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider, Slider } from "antd";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider, Slider, Col, Row } from "antd";
 import { FrownOutlined, HeartOutlined, QuestionOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
@@ -17,9 +17,9 @@ const { CheckableTag } = Tag;
 
 class Result extends React.Component {
   userActions = [
-    { name: "dislike", displayName: "I Don't like it", icon: <FrownOutlined /> },
-    { name: "noclue", displayName: "I have No Clue", icon: <QuestionOutlined /> },
-    { name: "like", displayName: "Show More Like This!", icon: <HeartOutlined /> },
+    { name: "dislike", displayName: (<p className="feedback-tag-description">I Don't <br></br>like it</p>), icon: <FrownOutlined /> },
+    { name: "noclue", displayName: (<p className="feedback-tag-description">I have <br></br>No Clue</p>), icon: <QuestionOutlined /> },
+    { name: "like", displayName: (<p className="feedback-tag-description">Show More <br></br>Like This!</p>), icon: <HeartOutlined /> },
   ];
 
   state = {
@@ -107,10 +107,10 @@ class Result extends React.Component {
 
     function moreInfo() {
       Modal.info({
-        title: "This Song is recommended like bellow",
+        title: "This Score of Each",
         content: (
           <div className="song-score-info">
-            <div className="score-div">
+            <div className="pitch-score-div">
               <p className="score-title">Pitch</p>
               <div>
                 <Tag color="#6200ee">Easy</Tag>
@@ -118,15 +118,18 @@ class Result extends React.Component {
                 <Tag>Hard</Tag>
               </div>
             </div>
-            <div className="score-div">
-              <p className="score-title">Song Preference</p>
-              <p className="score"><strong>Ninety percent</strong> of users who have similar tastes like this song</p>
-            </div>
-            <div className="score-div">
+            <div className="mood-score-div">
               <p className="score-title">Mood</p>
               <div>
-                <Tag className="whom-info">selectedPeople</Tag>
-                <Tag className="mood-info">selectedMood</Tag>
+                <Tag color="#6200ee">selectedMood</Tag>
+              </div>
+            </div>
+            <div className="song-score-div">
+              <p className="score-title">Preference</p>
+              <div className="pref-score">
+                <p>
+                  <strong>99% of users</strong> who have similar tastes like this song
+                </p>
               </div>
             </div>
           </div>
@@ -152,15 +155,15 @@ class Result extends React.Component {
                 actions={this.userActions.map((userAction) => (
                   <CheckableTag
                     key={userAction.name}
-                    className = "feedback-tag"
                     checked={this.state.feedbacks.get(song.id) === userAction.name}
                     onChange={(checked) =>
                       this.handleSelectedFeedback(userAction.name, checked, song.id)
                     }
                   >
-                    {userAction.icon}
-                    <span></span>
-                    {userAction.displayName}
+                    <div className="feedback-tag-div">
+                      {userAction.icon}
+                      {userAction.displayName}
+                    </div>
                   </CheckableTag>
                 ))}
               >
@@ -187,12 +190,14 @@ class Result extends React.Component {
           <Button
               className="adjust-button"
               type="primary"
+              Class="standard"
+              State="normal"
               onClick={this.handleModalChange}
             >
-              Change Condition
+              CHANGE CONDITION
           </Button>
           <Modal
-            title="Want to change the recommendation condition?"
+            title="You can change the condition of recommendation with slider"
             visible={this.state.modal}
             onCancel={this.handleModalChange}
             footer={[
@@ -212,36 +217,54 @@ class Result extends React.Component {
             ]}
           >
             <div className="weight-control-slider">
-              <p className="weight-slider-title">Mood</p>
-              <Slider
-              min={-1}
-              max={1}
-              onChange={this.onChangeMood}
-              value={typeof moodWeight === 'number' ? moodWeight : 0}
-              step={1}
-              />
-              <p className="weight-slider-description">Mood description</p>
+              <Row>
+                <p className="weight-slider-title">Mood</p>
+                <Col span={16}>
+                  <Slider
+                  min={-1}
+                  max={1}
+                  onChange={this.onChangeMood}
+                  value={typeof moodWeight === 'number' ? moodWeight : 0}
+                  step={1}
+                  />
+                </Col>
+              </Row>
+              <p className="weight-slider-description">
+                Mood
+              </p>
             </div>
             <div className="weight-control-slider">
-              <p className="weight-slider-title">Pitch</p>
-              <Slider
-              min={-1}
-              max={1}
-              onChange={this.onChangePitch}
-              value={typeof pitchWeight === 'number' ? pitchWeight : 0}
-              step={1}
-              />
-              <p className="weight-slider-description">Pitch description</p>
+              <Row>
+                <p className="weight-slider-title">Pitch</p>
+                <Col span={16}>
+                  <Slider
+                  min={-1}
+                  max={1}
+                  onChange={this.onChangePitch}
+                  value={typeof pitchWeight === 'number' ? pitchWeight : 0}
+                  step={1}
+                  />
+                </Col>
+              </Row>
+              <p className="weight-slider-description">
+                Pitch description
+              </p>
             </div>
             <div className="weight-control-slider">
-              <p className="weight-slider-title">Song Preference</p>
-              <Slider
-              min={-1}
-              max={1}
-              onChange={this.onChangeSongPref}
-              value={typeof songPrefWeight === 'number' ? songPrefWeight : 0}
-              step={1}
-              />
+              <Row>
+                <p className="weight-slider-title">
+                  Song Preference
+                </p>
+                <Col span={16}>
+                  <Slider
+                  min={-1}
+                  max={1}
+                  onChange={this.onChangeSongPref}
+                  value={typeof songPrefWeight === 'number' ? songPrefWeight : 0}
+                  step={1}
+                  />
+                </Col>
+              </Row>
               <p className="weight-slider-description">Song Preference description</p>
             </div>
             
