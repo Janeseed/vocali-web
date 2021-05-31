@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
-import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider } from "antd";
+import { FrownOutlined, HeartOutlined, QuestionOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
 import "./css/list.css";
@@ -106,11 +106,11 @@ class LikeList extends React.Component {
         <>
           <InfoHeader />
           <Content>
-            <div className="like-song-list-div">
-                <div className="songs">
+            <div className="like-style-layout-content">
+                <div className="like-list-div">
                 {this.state.songList.map((song) => (
                     <Card
-                    className="likeList"
+                    className="like-list"
                     title={this.mergeSongNum(song.songNum)}
                     extra={
                         <Button type="link" onClick={Delete}>
@@ -139,7 +139,35 @@ class LikeList extends React.Component {
                 </div>
             </div>
           </Content>
-          <Footer class="vocali-nav">
+          <Footer className="vocali-footer">
+            <div class="buttons">
+                <Button
+                className="show-result-button"
+                type="text"
+                icon={<CoffeeOutlined />}
+                onClick={() => this.nextPath("/home")}
+                >
+                Mood
+                </Button>
+                <Divider type="vertical" />
+                <Button
+                className="show-result-button"
+                type="text"
+                icon={<HomeOutlined />}
+                onClick={() => this.nextPath("/result")}
+                >
+                Result
+                </Button>
+                <Divider type="vertical" />
+                <Button
+                className="show-like-button"
+                type="text"
+                icon={<HeartOutlined />}
+                onClick={() => this.nextPath("/likelist")}
+                >
+                Like List
+                </Button>
+            </div>
           </Footer>
         </>
       );

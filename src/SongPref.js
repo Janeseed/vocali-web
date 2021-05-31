@@ -40,13 +40,14 @@ class SongPref extends React.Component {
       <div>
         <SimpleHeader back="/pitch" />
         <Paragraph className="description">
-          Next,<br></br>Check the songs you like!
+          Next,<br></br>Check all the songs you would sing at Noraebang!
         </Paragraph>
-        <div className="space-div">
-          <Space>
+        <div>
+          <div className="song-pref-div">
             {songlist.map((song) => (
               <Card
                 size="small"
+                className = "song-pref-card"
                 title={song.title}
                 extra={
                   <CheckableTag
@@ -57,13 +58,14 @@ class SongPref extends React.Component {
                     <HeartOutlined />
                   </CheckableTag>
                 }
-                style={{ width: 160 }}
+                style={{ width: 300 }}
               >
                 <p>{song.artist}</p>
               </Card>
             ))}
-          </Space>
+          </div>
         </div>
+
 
         <Button
           className="next-button"

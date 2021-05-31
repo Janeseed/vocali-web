@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Layout, Tag, Avatar } from "antd";
+import { Layout, Tag, Avatar, Space } from "antd";
 
 import Logo from "./vocali_logo2.svg";
 import Cookies from "universal-cookie";
@@ -50,11 +50,11 @@ const InfoHeader = ({ people, mood }) => {
           <Tag className="pitch-info">{userPitch}</Tag>
         </div>
       </div>
-      <div className="row">
-        <div className="mood-dashboard">
-          <p className="mood-title">Today's Mood</p>
-          <Tag>{selectedPeople}</Tag>
-          <Tag>{selectedMood}</Tag>
+      <div className="mood-dashboard">
+        <p className="mood-title">Today's Mood</p>
+        <div className="mood-info-div">
+          <Tag className="whom-info">{selectedPeople}</Tag>
+          <Tag className="mood-info">{selectedMood}</Tag>
         </div>
       </div>
     </Header>

@@ -8,6 +8,7 @@ import Pitch from "./PitchDetect";
 import Home from "./Home";
 import Result from "./Result";
 import Weight from "./Weight";
+import LikeList from "./List";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/pitch" component={Pitch} />
           <Route path="/result" component={Result} />
           <Route path="/weight" component={Weight} />
+          <Route path="/likelist" component={LikeList} />
         </Switch>
       </div>
     </Router>

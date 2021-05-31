@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Drawer } from "antd";
-import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider, Slider } from "antd";
+import { FrownOutlined, HeartOutlined, QuestionOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
 import "./css/result.css";
@@ -14,58 +14,14 @@ const { Meta } = Card;
 const { CheckableTag } = Tag;
 
 class Result extends React.Component {
-  nextPath(path) {
-    this.props.history.push(path);
-  }
-
   userActions = [
-    { name: "dislike", displayName: "Dislike", icon: <FrownOutlined /> },
-    { name: "noclue", displayName: "No clue", icon: <QuestionOutlined /> },
-    { name: "like", displayName: "Like", icon: <HeartOutlined /> },
+    { name: "dislike", displayName: "I Don't like it", icon: <FrownOutlined /> },
+    { name: "noclue", displayName: "I have No Clue", icon: <QuestionOutlined /> },
+    { name: "like", displayName: "Show More Like This!", icon: <HeartOutlined /> },
   ];
 
   state = {
     songList: [
-      {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
-      },
-      {
-        id: "1hOEq5q9L41E2YbLhVvW5x",
-        title: '아로하(드라마 "슬기로운 의사 생활")',
-        artist: "조정석",
-        publishedYear: 2020,
-        genre: "Ballad",
-        mood: "energetic",
-        pitch: "A#",
-        songNum: 27615,
-      },
-      {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
-      },
-      {
-        id: "1hOEq5q9L41E2YbLhVvW5x",
-        title: '아로하(드라마 "슬기로운 의사 생활")',
-        artist: "조정석",
-        publishedYear: 2020,
-        genre: "Ballad",
-        mood: "energetic",
-        pitch: "A#",
-        songNum: 27615,
-      },
       {
         id: "x1yk42m_99d",
         title: "문어의 꿈",
@@ -82,7 +38,19 @@ class Result extends React.Component {
     modal: false,
     drawer: false,
     selectedFeedback: "",
+    moodWeight: 0,
+    pitchWeight: 0,
+    songPrefWeight: 0,
   };
+
+  nextPath(path) {
+    this.props.history.push(path);
+  }
+
+  concatSongNum(songNum) {
+    const concated = "Song No. " + songNum 
+    return concated
+  }
 
   handleSelectedFeedback(tag, checked, songid) {
     if (checked) {
@@ -95,29 +63,59 @@ class Result extends React.Component {
     this.setState({ modal: !this.state.modal });
   };
 
-  handleDrawerChange = () => {
-    this.setState({ drawer: !this.state.drawer });
+  onChangeMood = value => {
+    if (isNaN(value)) {
+      return;
+    }
+    this.setState({
+      moodWeight: value,
+    });
+  };
+
+  onChangePitch = value => {
+    if (isNaN(value)) {
+      return;
+    }
+    this.setState({
+      pitchWeight: value,
+    });
+  };
+
+  onChangeSongPref = value => {
+    if (isNaN(value)) {
+      return;
+    }
+    this.setState({
+      songPrefWeight: value,
+    });
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, moodWeight, pitchWeight, songPrefWeight } = this.state;
 
     function moreInfo() {
       Modal.info({
-        title: "The score of consideration",
+        title: "This Song is recommended like bellow",
         content: (
-          <div>
+          <div className="song-score-info">
             <div className="score-div">
               <p className="score-title">Pitch</p>
-              <p className="score">0</p>
+              <div>
+                <Tag color="#6200ee">Easy</Tag>
+                <Tag>Normal</Tag>
+                <Tag>Hard</Tag>
+              </div>
             </div>
             <div className="score-div">
               <p className="score-title">Song Preference</p>
-              <p className="score">0</p>
+              <p className="score"><strong>Ninety percent</strong> of users who have similar tastes like this song</p>
             </div>
             <div className="score-div">
               <p className="score-title">Mood</p>
-              <p className="score">0</p>
+              <div>
+                <Tag className="whom-info">selectedPeople</Tag>
+                <Tag className="mood-info">selectedMood</Tag>
+              </div>
             </div>
           </div>
         ),
@@ -128,20 +126,21 @@ class Result extends React.Component {
     return (
       <>
         <InfoHeader />
-        <Content style={{ backgroundColor: "#F6F0FE" }}>
-          <div className="songs">
+        <Content className="result-contents" style={{ backgroundColor: "#F6F0FE" }}>
+          <div className="style-layout-content">
             {this.state.songList.map((song) => (
               <Card
                 className="song-info"
-                title={song.songNum}
+                title={this.concatSongNum(song.songNum)}
                 extra={
                   <Button type="link" onClick={moreInfo}>
-                    Explain
+                    Why this Song?
                   </Button>
                 }
                 actions={this.userActions.map((userAction) => (
                   <CheckableTag
                     key={userAction.name}
+                    className = "feedback-tag"
                     checked={this.state.feedbacks.get(song.id) === userAction.name}
                     onChange={(checked) =>
                       this.handleSelectedFeedback(userAction.name, checked, song.id)
@@ -155,6 +154,7 @@ class Result extends React.Component {
               >
                 <Skeleton loading={loading} avatar active>
                   <Meta
+                    className="card-skeleton"
                     avatar={
                       <Avatar
                         style={{
@@ -172,58 +172,98 @@ class Result extends React.Component {
               </Card>
             ))}
           </div>
+          <Button
+              className="adjust-button"
+              type="primary"
+              onClick={this.handleModalChange}
+            >
+              Change Condition
+          </Button>
           <Modal
-            title="Want to adjust the result?"
+            title="Want to change the recommendation condition?"
             visible={this.state.modal}
             onCancel={this.handleModalChange}
             footer={[
-              <Button key="update" type="primary" onClick={this.handleModalChange}>
-                Update Song List
+              <Button 
+                key="update"
+                onClick={this.handleModalChange}
+              >
+                CANCLE
               </Button>,
               <Button
-                key="weigth-control"
+                key="weight-control-confirm"
                 type="primary"
-                onClick={() => this.props.history.push("/weight")}
+                onClick={this.handleModalChange}
               >
-                Control Weight
+                CONFIRM
               </Button>,
             ]}
           >
-            <p>
-              You can (1) UPDATE the song list with new recommendation reflecting your feedback or
-              <br />
-              (2) CONTROL the weights of the recommendation
-            </p>
+            <div className="weight-control-slider">
+              <p className="weight-slider-title">Mood</p>
+              <Slider
+              min={-1}
+              max={1}
+              onChange={this.onChangeMood}
+              value={typeof moodWeight === 'number' ? moodWeight : 0}
+              step={1}
+              />
+              <p className="weight-slider-description">Mood description</p>
+            </div>
+            <div className="weight-control-slider">
+              <p className="weight-slider-title">Pitch</p>
+              <Slider
+              min={-1}
+              max={1}
+              onChange={this.onChangePitch}
+              value={typeof pitchWeight === 'number' ? pitchWeight : 0}
+              step={1}
+              />
+              <p className="weight-slider-description">Pitch description</p>
+            </div>
+            <div className="weight-control-slider">
+              <p className="weight-slider-title">Song Preference</p>
+              <Slider
+              min={-1}
+              max={1}
+              onChange={this.onChangeSongPref}
+              value={typeof songPrefWeight === 'number' ? songPrefWeight : 0}
+              step={1}
+              />
+              <p className="weight-slider-description">Song Preference description</p>
+            </div>
+            
           </Modal>
-
-          <Drawer
-            title="List of Likes"
-            placement="left"
-            closable={true}
-            onClose={this.handleDrawerChange}
-            visible={this.state.drawer}
-          >
-            <Card style={{ width: 170, height: 100 }}>
-              <p className="songNum">000000</p>
-              <p className="song-title">문어의 꿈</p>
-              <p className="artist">안예은</p>
-            </Card>
-          </Drawer>
         </Content>
-        <Footer class="vocali-footer">
-          <div class="buttons">
-            <Button
-              className="show-like-button"
-              type="primary"
-              icon={<HeartOutlined />}
-              onClick={this.handleDrawerChange}
-            >
-              Like List
-            </Button>
-            <Button className="adjust-button" type="primary" onClick={this.handleModalChange}>
-              Adjusting Results
-            </Button>
-          </div>
+        <Footer className="vocali-footer">
+            <div class="buttons">
+                <Button
+                className="show-result-button"
+                type="text"
+                icon={<CoffeeOutlined />}
+                onClick={() => this.nextPath("/home")}
+                >
+                Mood
+                </Button>
+                <Divider type="vertical" />
+                <Button
+                className="show-result-button"
+                type="text"
+                icon={<HomeOutlined />}
+                onClick={() => this.nextPath("/result")}
+                >
+                Result
+                </Button>
+                <Divider type="vertical" />
+                <Button
+                className="show-like-button"
+                type="text"
+                icon={<HeartOutlined />}
+                onClick={() => this.nextPath("/likelist")}
+                >
+                Like List
+                </Button>
+            </div>
         </Footer>
       </>
     );
