@@ -94,12 +94,16 @@ class LikeList extends React.Component {
     return merge;
   }
 
+  handleDelete(songid) {
+    /*
+    this.setState({
+      해당하는 id의 song을 songlist에서 제거
+    });
+    */
+  }
+
   render() {
     const { loading } = this.state;
-
-    function Delete() {
-      //카드 지우는거 어떻게 하는 거지?
-    }
 
     return (
       <>
@@ -112,7 +116,7 @@ class LikeList extends React.Component {
                   className="like-list"
                   title={this.mergeSongNum(song.songNum)}
                   extra={
-                      <Button type="link" onClick={Delete}>
+                      <Button type="link" onClick={this.handleDelete(song.id)}>
                       Delete
                       </Button>
                   }
