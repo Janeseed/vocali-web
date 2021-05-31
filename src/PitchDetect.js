@@ -134,21 +134,13 @@ class Pitch extends React.Component {
           </div>
         </div>
         <div className="pitch-buttons">
-          <Button
-            className="record-button"
-            Type="primary"
-            Class="standard"
-            State="normal"
-            onClick={this.handleRecordChange}
-          >
+          <Button className="record-button" type="primary" onClick={this.handleRecordChange}>
             {this.bool2str(this.state.record)}
           </Button>
           <Button
             className="stop-button"
-            Type="primary"
+            type="primary"
             disabled={this.state.disabled || this.state.record}
-            Class="standard"
-            State="normal"
             onClick={this.onNextClick}
           >
             NEXT

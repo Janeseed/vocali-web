@@ -46,9 +46,9 @@
 }
 
 .checkable-tags {
-  font-style: normal;
   font-weight: 400;
   font-size: 15px;
+  height: 24px;
   margin: 0.3rem;
 }
 

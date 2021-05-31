@@ -91,15 +91,13 @@ class Home extends React.Component {
             </div>
           </div>
           <Button
-            className="find-button"
+            className="find-button standard"
             onClick={() =>
               this.nextPath(
                 "/result?people=" + this.state.selectedPeople + "&mood=" + this.state.selectedMood
               )
             }
-            Type="primary"
-            Class="standard"
-            State="normal"
+            type="primary"
           >
             FIND SONG
           </Button>

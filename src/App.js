@@ -21,7 +21,7 @@ function App() {
           <Route path="/songpref" component={SongPref} />
           <Route path="/pitch" component={Pitch} />
           <Route path="/result" component={Result} />
-          <Route path="/weight" component={Weight} />
+          {/* <Route path="/weight" component={Weight} /> */}
           <Route path="/likelist" component={LikeList} />
         </Switch>
       </div>

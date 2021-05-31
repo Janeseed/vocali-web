@@ -1,26 +1,19 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Divider } from "antd";
-import { FrownOutlined, HeartOutlined, QuestionOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Card, Avatar } from "antd";
 
 import "./css/home.css";
 import "./css/list.css";
 import InfoHeader from "./InfoHeader.js";
+import VocaliFooter from "./Footer.js";
 
-const { Content, Footer } = Layout;
 const { Meta } = Card;
 
 class LikeList extends React.Component {
   nextPath(path) {
     this.props.history.push(path);
   }
-
-  userActions = [
-    { name: "dislike", displayName: "Dislike", icon: <FrownOutlined /> },
-    { name: "noclue", displayName: "No clue", icon: <QuestionOutlined /> },
-    { name: "like", displayName: "Like", icon: <HeartOutlined /> },
-  ];
 
   state = {
     songList: [
@@ -44,36 +37,6 @@ class LikeList extends React.Component {
         pitch: "A#",
         songNum: 27615,
       },
-      {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
-      },
-      {
-        id: "1hOEq5q9L41E2YbLhVvW5x",
-        title: '아로하(드라마 "슬기로운 의사 생활")',
-        artist: "조정석",
-        publishedYear: 2020,
-        genre: "Ballad",
-        mood: "energetic",
-        pitch: "A#",
-        songNum: 27615,
-      },
-      {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
-      },
     ],
     feedbacks: new Map(),
     loading: false,
@@ -89,17 +52,11 @@ class LikeList extends React.Component {
     console.log(this.state.feedbacks);
   }
 
-  mergeSongNum(songNum) {
-    const merge = "Song No. " + songNum;
-    return merge;
-  }
-
   handleDelete(songid) {
-    /*
     this.setState({
-      해당하는 id의 song을 songlist에서 제거
+      songList: this.state.songList.filter((song) => song.id !== songid),
     });
-    */
+    // TODO: API connection
   }
 
   render() {
@@ -108,70 +65,38 @@ class LikeList extends React.Component {
     return (
       <>
         <InfoHeader />
-        <Content>
-          <div className="like-style-layout-content">
-              <div className="like-list-div">
-              {this.state.songList.map((song) => (
-                  <Card
-                  className="like-list"
-                  title={this.mergeSongNum(song.songNum)}
-                  extra={
-                      <Button type="link" onClick={this.handleDelete(song.id)}>
-                      Delete
-                      </Button>
+        <div className="like-list-div">
+          {this.state.songList.map((song) => (
+            <Card
+              className="like-list"
+              title={`Song No. ${song.songNum}`}
+              extra={
+                <Button type="link" onClick={() => this.handleDelete(song.id)}>
+                  Delete
+                </Button>
+              }
+            >
+              <Skeleton loading={loading} avatar active>
+                <Meta
+                  avatar={
+                    <Avatar
+                      style={{
+                        color: "#000000",
+                        backgroundColor: "#D9D9D9",
+                      }}
+                    >
+                      {song.pitch}
+                    </Avatar>
                   }
-                  >
-                  <Skeleton loading={loading} avatar active>
-                      <Meta
-                      avatar={
-                          <Avatar
-                          style={{
-                              color: "#000000",
-                              backgroundColor: "#D9D9D9",
-                          }}
-                          >
-                          {song.pitch}
-                          </Avatar>
-                      }
-                      title={song.title}
-                      description={song.artist}
-                      />
-                  </Skeleton>
-                  </Card>
-              ))}
-              </div>
-          </div>
-        </Content>
-        <Footer className="vocali-footer">
-          <div class="buttons">
-              <Button
-              className="show-result-button"
-              type="text"
-              icon={<CoffeeOutlined />}
-              onClick={() => this.nextPath("/home")}
-              >
-              Mood
-              </Button>
-              <Divider type="vertical" />
-              <Button
-              className="show-result-button"
-              type="text"
-              icon={<HomeOutlined />}
-              onClick={() => this.nextPath("/result")}
-              >
-              Result
-              </Button>
-              <Divider type="vertical" />
-              <Button
-              className="show-like-button"
-              type="text"
-              icon={<HeartOutlined />}
-              onClick={() => this.nextPath("/likelist")}
-              >
-              Like List
-              </Button>
-          </div>
-        </Footer>
+                  title={song.title}
+                  description={song.artist}
+                />
+              </Skeleton>
+            </Card>
+          ))}
+          <div style={{ height: "20px" }} />
+        </div>
+        <VocaliFooter />
       </>
     );
   }

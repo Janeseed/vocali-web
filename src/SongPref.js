@@ -65,9 +65,7 @@ class SongPref extends React.Component {
         <Button
           className="next-button"
           onClick={() => this.onNextClick(this.state.selectedSongs)}
-          Type="primary"
-          Class="standard"
-          State="normal"
+          type="primary"
         >
           NEXT
         </Button>

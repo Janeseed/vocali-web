@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Cookies from "universal-cookie";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Slider, Col, Row } from "antd";
-import { FrownOutlined, HeartOutlined, QuestionOutlined, DownOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Radio } from "antd";
+import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
 import "./css/result.css";
@@ -62,22 +62,14 @@ class Result extends React.Component {
     ],
     feedbacks: new Map(),
     loading: false,
-    modal: false,
-    drawer: false,
+    adjustModal: false,
+    explainModal: false,
     selectedFeedback: "",
-    moodWeight: 0,
-    pitchWeight: 0,
-    songPrefWeight: 0,
+    moodWeight: "mid",
+    pitchWeight: "mid",
+    songPrefWeight: "mid",
+    mood: "",
   };
-
-  nextPath(path) {
-    this.props.history.push(path);
-  }
-
-  concatSongNum(songNum) {
-    const concated = "Song No. " + songNum;
-    return concated;
-  }
 
   handleSelectedFeedback(tag, checked, songid) {
     if (checked) {
@@ -86,8 +78,13 @@ class Result extends React.Component {
     console.log(this.state.feedbacks);
   }
 
-  handleModalChange = () => {
-    this.setState({ modal: !this.state.modal });
+  handleExplainModalChange = () => {
+    this.setState({ explainModal: !this.state.explainModal });
+  };
+
+  handleAdjustModalChange = () => {
+    this.setState({ adjustModal: !this.state.adjustModal });
+    // TODO: API connection
   };
 
   onChangeMood = (value) => {
@@ -119,6 +116,7 @@ class Result extends React.Component {
 
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
+    this.setState({ mood: values.mood });
     const cookies = new Cookies();
     const userId = cookies.get("id", { path: "/" });
     // vocaliAPI.getRecommendation(userId, values.mood + "," + values.people).then((result) => {
@@ -128,40 +126,7 @@ class Result extends React.Component {
   }
 
   render() {
-    const { loading, moodWeight, pitchWeight, songPrefWeight } = this.state;
-
-    function moreInfo() {
-      Modal.info({
-        title: "This Score of Each",
-        content: (
-          <div className="song-score-info">
-            <div className="pitch-score-div">
-              <p className="score-title">Pitch</p>
-              <div>
-                <Tag color="#6200ee">Easy</Tag>
-                <Tag>Normal</Tag>
-                <Tag>Hard</Tag>
-              </div>
-            </div>
-            <div className="mood-score-div">
-              <p className="score-title">Mood</p>
-              <div>
-                <Tag color="#6200ee">selectedMood</Tag>
-              </div>
-            </div>
-            <div className="song-score-div">
-              <p className="score-title">Preference</p>
-              <div className="pref-score">
-                <p>
-                  <strong>99% of users</strong> who have similar tastes like this song
-                </p>
-              </div>
-            </div>
-          </div>
-        ),
-        onOk() {},
-      });
-    }
+    const { loading } = this.state;
 
     return (
       <div style={{ backgroundColor: "#F6F0FE" }}>
@@ -175,9 +140,13 @@ class Result extends React.Component {
           {this.state.songList.map((song) => (
             <Card
               className="song-info"
-              title={this.concatSongNum(song.songNum)}
+              title={`Song No. ${song.songNum}`}
               extra={
-                <Button type="link" onClick={moreInfo} style={{ padding: "0" }}>
+                <Button
+                  type="link"
+                  onClick={this.handleExplainModalChange}
+                  style={{ padding: "0" }}
+                >
                   Why this song?
                 </Button>
               }
@@ -189,10 +158,8 @@ class Result extends React.Component {
                     this.handleSelectedFeedback(userAction.name, checked, song.id)
                   }
                 >
-                  <div className="feedback-tag-div">
-                    {userAction.icon}
-                    {userAction.displayName}
-                  </div>
+                  {userAction.icon}
+                  {userAction.displayName}
                 </CheckableTag>
               ))}
             >
@@ -216,72 +183,114 @@ class Result extends React.Component {
             </Card>
           ))}
           <p className="result-description-small">Don't like the result?</p>
-          <Button
-            className="adjust-button"
-            type="primary"
-            Class="standard"
-            State="normal"
-            onClick={this.handleModalChange}
-          >
+          <Button className="adjust-button" type="primary" onClick={this.handleAdjustModalChange}>
             Adjust weight
           </Button>
           <Modal
-            title="You can change the condition of recommendation with slider"
-            visible={this.state.modal}
-            onCancel={this.handleModalChange}
+            title="Weight control"
+            visible={this.state.adjustModal}
+            onCancel={this.handleAdjustModalChange}
             footer={[
-              <Button key="update" onClick={this.handleModalChange}>
+              <Button key="update" onClick={this.handleAdjustModalChange}>
                 CANCLE
               </Button>,
-              <Button key="weight-control-confirm" type="primary" onClick={this.handleModalChange}>
+              <Button
+                key="weight-control-confirm"
+                type="primary"
+                onClick={this.handleAdjustModalChange}
+              >
                 CONFIRM
               </Button>,
             ]}
           >
+            <p>You can change the condition of recommendation with slider</p>
             <div className="weight-control-slider">
-              <Row>
-                <p className="weight-slider-title">Mood</p>
-                <Col span={16}>
-                  <Slider
-                    min={-1}
-                    max={1}
-                    onChange={this.onChangeMood}
-                    value={typeof moodWeight === "number" ? moodWeight : 0}
-                    step={1}
-                  />
-                </Col>
-              </Row>
-              <p className="weight-slider-description">Mood</p>
+              <p className="weight-slider-title">Mood</p>
+              <p className="weight-slider-description">
+                How much the mood affect the recommendation
+              </p>
+              <Radio.Group
+                className="weight-options"
+                defaultValue={this.state.moodWeight}
+                onChange={this.onChangeMood}
+                buttonStyle="solid"
+              >
+                <Radio.Button value="small">No affect</Radio.Button>
+                <Radio.Button value="mid">Moderate</Radio.Button>
+                <Radio.Button value="large">Large affect</Radio.Button>
+              </Radio.Group>
             </div>
             <div className="weight-control-slider">
-              <Row>
-                <p className="weight-slider-title">Pitch</p>
-                <Col span={16}>
-                  <Slider
-                    min={-1}
-                    max={1}
-                    onChange={this.onChangePitch}
-                    value={typeof pitchWeight === "number" ? pitchWeight : 0}
-                    step={1}
-                  />
-                </Col>
-              </Row>
-              <p className="weight-slider-description">Pitch description</p>
+              <p className="weight-slider-title">Pitch</p>
+              <p className="weight-slider-description">
+                How much the pitch affect the recommendation
+              </p>
+              <Radio.Group
+                className="weight-options"
+                defaultValue={this.state.pitchWeight}
+                onChange={this.onChangePitch}
+                buttonStyle="solid"
+              >
+                <Radio.Button value="small">No affect</Radio.Button>
+                <Radio.Button value="mid">Moderate</Radio.Button>
+                <Radio.Button value="large">Large affect</Radio.Button>
+              </Radio.Group>
             </div>
             <div className="weight-control-slider">
-              <Row>
-                <p className="weight-slider-title">Song Preference</p>
-                <Col span={16}>
-                  <Slider
-                    min={-1}
-                    max={1}
-                    onChange={this.onChangeSongPref}
-                    value={typeof songPrefWeight === "number" ? songPrefWeight : 0}
-                    step={1}
-                  />
-                </Col>
-              </Row>
-              <p className="weight-slider-description">Song Preference description</p>
+              <p className="weight-slider-title">Song Preference</p>
+              <p className="weight-slider-description">
+                How much your like history affect the recommendation
+              </p>
+              <Radio.Group
+                className="weight-options"
+                defaultValue={this.state.songPrefWeight}
+                onChange={this.onChangeSongPref}
+                buttonStyle="solid"
+              >
+                <Radio.Button value="small">No affect</Radio.Button>
+                <Radio.Button value="mid">Moderate</Radio.Button>
+                <Radio.Button value="large">Large affect</Radio.Button>
+              </Radio.Group>
+            </div>
+          </Modal>
+          <Modal
+            title="Score of this song"
+            visible={this.state.explainModal}
+            onCancel={this.handleExplainModalChange}
+            footer={[
+              <Button
+                key="weight-control-confirm"
+                type="primary"
+                onClick={this.handleExplainModalChange}
+              >
+                OK
+              </Button>,
+            ]}
+          >
+            <div className="song-score-info">
+              <div className="pitch-score-div">
+                <p className="score-title">Pitch</p>
+                <div>
+                  <Tag color="#6200ee">Easy</Tag>
+                  <Tag>Normal</Tag>
+                  <Tag>Hard</Tag>
+                </div>
+              </div>
+              <div className="mood-score-div">
+                <p className="score-title">Mood</p>
+                <div>
+                  This song is <strong>99%</strong> {this.state.mood}
+                </div>
+              </div>
+              <div className="song-score-div">
+                <p className="score-title">Preference</p>
+                <div className="pref-score">
+                  <p>
+                    <strong>99% of users</strong> who have <br />
+                    similar tastes like this song
+                  </p>
+                </div>
+              </div>
             </div>
           </Modal>
         </Content>
