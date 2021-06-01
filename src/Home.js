@@ -2,14 +2,13 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 
 import { Button, Layout, Tag, Divider } from "antd";
-import { HeartOutlined, CoffeeOutlined, HomeOutlined } from "@ant-design/icons";
-
 
 import "./css/home.css";
 import Cookies from "universal-cookie";
 import InfoHeader from "./InfoHeader.js";
+// import VocaliFooter from "./Footer.js";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const { CheckableTag } = Tag;
 const tagsData = ["Alone", "Together"];
 const tagsData2 = ["Happy", "Energetic", "Depression", "Calm"];
@@ -64,11 +63,11 @@ class Home extends React.Component {
             </div>
             <hr />
             <div className="question">With Whom?</div>
-            <div className = "checkable-tag-div">
+            <div className="checkable-tag-div">
               {tagsData.map((tag) => (
                 <CheckableTag
                   key={tag}
-                  className ="checkable-tags"
+                  className="checkable-tags"
                   checked={this.state.selectedPeople === tag}
                   onChange={(checked) => this.handlePeopleChange(tag, checked)}
                 >
@@ -78,11 +77,11 @@ class Home extends React.Component {
             </div>
             <Divider />
             <div className="question">What kind of mood you like today?</div>
-            <div className = "checkable-tag-div">
+            <div className="checkable-tag-div">
               {tagsData2.map((tag) => (
                 <CheckableTag
                   key={tag}
-                  className ="checkable-tags"
+                  className="checkable-tags"
                   checked={this.state.selectedMood === tag}
                   onChange={(checked) => this.handleMoodChange(tag, checked)}
                 >
@@ -92,49 +91,18 @@ class Home extends React.Component {
             </div>
           </div>
           <Button
-            className="find-button"
+            className="find-button standard"
             onClick={() =>
               this.nextPath(
                 "/result?people=" + this.state.selectedPeople + "&mood=" + this.state.selectedMood
               )
             }
-            Type="primary"
-            Class="standard"
-            State="normal"
+            type="primary"
           >
             FIND SONG
           </Button>
         </Content>
-        <Footer className="vocali-footer">
-            <div class="buttons">
-                <Button
-                className="show-result-button"
-                type="text"
-                icon={<CoffeeOutlined />}
-                onClick={() => this.nextPath("/home")}
-                >
-                Mood
-                </Button>
-                <Divider type="vertical" />
-                <Button
-                className="show-result-button"
-                type="text"
-                icon={<HomeOutlined />}
-                onClick={() => this.nextPath("/result")}
-                >
-                Result
-                </Button>
-                <Divider type="vertical" />
-                <Button
-                className="show-like-button"
-                type="text"
-                icon={<HeartOutlined />}
-                onClick={() => this.nextPath("/likelist")}
-                >
-                Like List
-                </Button>
-            </div>
-          </Footer>
+        {/* <VocaliFooter /> */}
       </Layout>
     );
   }

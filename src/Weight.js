@@ -84,22 +84,14 @@ class Weight extends React.Component {
                     min={0}
                     max={1}
                     onChange={this.onChangeSong}
-                    value={
-                      typeof songPrefWeight === "number" ? songPrefWeight : 0
-                    }
+                    value={typeof songPrefWeight === "number" ? songPrefWeight : 0}
                     step={0.01}
                   />
                 </Col>
               </Row>
             </div>
           </div>
-          <Button
-            className="find-button"
-            onClick={() => this.nextPath("/result")}
-            Type="primary"
-            Class="standard"
-            State="normal"
-          >
+          <Button className="find-button" onClick={() => this.nextPath("/result")} type="primary">
             Go to Result
           </Button>
         </Content>

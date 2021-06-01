@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Layout, Tag, Avatar, Space } from "antd";
+import { Layout, Tag, Avatar } from "antd";
 
 import Logo from "./vocali_logo2.svg";
 import Cookies from "universal-cookie";

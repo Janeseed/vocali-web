@@ -77,13 +77,7 @@ class InfoSet extends React.Component {
             />
           </div>
         </div>
-        <Button
-          className="next-button"
-          onClick={this.setInfo}
-          Type="primary"
-          Class="standard"
-          State="normal"
-        >
+        <Button className="next-button" onClick={this.setInfo} type="primary">
           NEXT
         </Button>
 
@@ -97,10 +91,7 @@ class InfoSet extends React.Component {
             </Button>,
           ]}
         >
-          <p>
-            You should fill out your name and age. Also your age should be valid
-            number :)
-          </p>
+          <p>You should fill out your name and age. Also your age should be valid number :)</p>
         </Modal>
       </>
     );

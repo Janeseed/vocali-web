@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography, Card, Space, Tag } from "antd";
+import { Button, Typography, Card, Tag } from "antd";
 import { HeartOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
 
@@ -42,35 +42,30 @@ class SongPref extends React.Component {
         <Paragraph className="description">
           Next,<br></br>Check all the songs you would sing at Noraebang!
         </Paragraph>
-        <div>
-          <div className="song-pref-div">
-            {songlist.map((song) => (
-              <Card
-                size="small"
-                className = "song-pref-card"
-                title={song.title}
-                extra={
-                  <CheckableTag
-                    key={song.songNum}
-                    checked={selectedSongs.indexOf(song) > -1}
-                    onChange={(checked) => this.handleSongPref(song, checked)}
-                  >
-                    <HeartOutlined />
-                  </CheckableTag>
-                }
-                style={{ width: 300 }}
-              >
-                <p>{song.artist}</p>
-              </Card>
-            ))}
-          </div>
+        <div className="song-pref-div">
+          {songlist.map((song) => (
+            <Card
+              size="small"
+              className="song-pref-card"
+              title={song.title}
+              extra={
+                <CheckableTag
+                  key={song.songNum}
+                  checked={selectedSongs.indexOf(song) > -1}
+                  onChange={(checked) => this.handleSongPref(song, checked)}
+                >
+                  <HeartOutlined />
+                </CheckableTag>
+              }
+            >
+              <p>{song.artist}</p>
+            </Card>
+          ))}
         </div>
         <Button
           className="next-button"
           onClick={() => this.onNextClick(this.state.selectedSongs)}
-          Type="primary"
-          Class="standard"
-          State="normal"
+          type="primary"
         >
           NEXT
         </Button>

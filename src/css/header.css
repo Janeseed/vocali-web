@@ -93,22 +93,12 @@
 .whom-info,
 .mood-info {
   height: 32px;
-
   background: #6200ee;
-  border-radius: 16px;
-
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 1rem;
+  border-radius: 5px;
+  font-size: 13px;
   line-height: 20px;
-  /* identical to box height, or 143% */
-
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  text-align: center;
   color: #ffffff;
 }
 
@@ -119,10 +109,7 @@
 }
 
 .mood-title {
-  margin: 0 21px;
-  font-family: Roboto;
-  font-style: normal;
+  margin: 0 20px;
   font-weight: 600;
-  font-size: 1rem;
-  color: #6200ee;
+  font-size: 16px;
 }

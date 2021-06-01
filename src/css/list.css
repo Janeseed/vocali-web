@@ -7,15 +7,10 @@
 }
 
 .like-list-div {
-  position: absolute;
+  min-height: calc(100vh - 232px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 100%;
-  top: 150px;
-  left: 0;
-  right: 0;
-  bottom: 5vh;
   overflow-y: scroll;
   overflow-x: hidden;
   background-color: #f6f0fe;

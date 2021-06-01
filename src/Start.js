@@ -16,17 +16,15 @@ class Start extends React.Component {
     return (
       <>
         <SimpleHeader back="none" />
-        <div class="row-flex-container">
+        <div className="row-flex-container">
           <Paragraph className="slogan">
             Vocali will find you a{" "}
             <span className="highlight">perfect song to sing at Noraebang</span>
           </Paragraph>
           <Button
-            className="start-button"
+            className="start-button circle"
             onClick={() => this.nextPath("/info")}
-            Type="primary"
-            Class="circle"
-            State="hover or pressed"
+            type="primary"
           >
             START
           </Button>
