@@ -15,11 +15,9 @@ export const createUser = (name, age) =>
     age: age * 1,
   });
 
-export const modifyUser = (id, data) =>
-  auth.put(`/users/${id}`, {
-    minPitch: data.minPitch,
-    maxPitch: data.maxPitch,
-  });
+export const modifyUser = (id, data) => {
+  return auth.put(`/users/${id}`, data);
+};
 
 export const selectSong = (userId, songs, category) => {
   let postList = [];
