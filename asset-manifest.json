@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/vocali-web/static/css/main.fae0ac74.chunk.css",
-    "main.js": "/vocali-web/static/js/main.d79945be.chunk.js",
-    "main.js.map": "/vocali-web/static/js/main.d79945be.chunk.js.map",
+    "main.js": "/vocali-web/static/js/main.bb5e59f8.chunk.js",
+    "main.js.map": "/vocali-web/static/js/main.bb5e59f8.chunk.js.map",
     "runtime-main.js": "/vocali-web/static/js/runtime-main.907a807a.js",
     "runtime-main.js.map": "/vocali-web/static/js/runtime-main.907a807a.js.map",
     "static/css/2.00bb4513.chunk.css": "/vocali-web/static/css/2.00bb4513.chunk.css",
@@ -19,6 +19,6 @@
     "static/css/2.00bb4513.chunk.css",
     "static/js/2.3228cf35.chunk.js",
     "static/css/main.fae0ac74.chunk.css",
-    "static/js/main.d79945be.chunk.js"
+    "static/js/main.bb5e59f8.chunk.js"
   ]
 }
