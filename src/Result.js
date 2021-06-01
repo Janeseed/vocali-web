@@ -157,6 +157,7 @@ class Result extends React.Component {
                   onChange={(checked) =>
                     this.handleSelectedFeedback(userAction.name, checked, song.id)
                   }
+                  style={{ width: "80%", padding: "5px", margin: "0" }}
                 >
                   {userAction.icon}
                   {userAction.displayName}
@@ -191,9 +192,6 @@ class Result extends React.Component {
             visible={this.state.adjustModal}
             onCancel={this.handleAdjustModalChange}
             footer={[
-              <Button key="update" onClick={this.handleAdjustModalChange}>
-                CANCLE
-              </Button>,
               <Button
                 key="weight-control-confirm"
                 type="primary"

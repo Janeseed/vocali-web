@@ -7,7 +7,7 @@ import SongPref from "./SongPref";
 import Pitch from "./PitchDetect";
 import Home from "./Home";
 import Result from "./Result";
-import Weight from "./Weight";
+// import Weight from "./Weight";
 import LikeList from "./List";
 
 function App() {
