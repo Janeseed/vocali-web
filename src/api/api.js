@@ -38,5 +38,5 @@ export const selectSong = (userId, songs, category) => {
 
 export const getEvaluation = (userId) => auth.get(`/users/${userId}/songs/select`);
 
-export const getRecommendation = (userId, moods) =>
-  auth.get(`/users/${userId}/recomendations?moods=` + moods);
+export const getRecommendation = (userId, moods, per) =>
+  auth.get(`/users/${userId}/recommendations?moods=${moods}&per=${per}`);

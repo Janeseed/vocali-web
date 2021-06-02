@@ -105,13 +105,20 @@ class Result extends React.Component {
   };
 
   loadSongFromModel() {
-    // vocaliAPI
-    //   .getRecommendation(this.state.userId, this.state.selectedMood + "," + this.state.selectedPeople)
-    //   .then((result) => {
-    //     console.log(result);
-    //   });
-    this.setState({ loading: false });
-    // TODO: Input 받아서 this.state.songList에 넣기
+    console.log(this.state.userId);
+    vocaliAPI
+      .getRecommendation(
+        this.state.userId,
+        this.state.selectedMood.toLowerCase() + "," + this.state.selectedPeople.toLowerCase(),
+        5
+      )
+      .then((result) => {
+        console.log(result.data);
+        this.setState({ songList: result.data, currSongIndex: 0 });
+      })
+      .then(() => {
+        this.setState({ loading: false });
+      });
   }
 
   handleSelectedFeedback(tag, checked, song) {
@@ -125,6 +132,7 @@ class Result extends React.Component {
     } else {
       console.log("end!");
       this.setState({ loading: true });
+      this.loadSongFromModel();
     }
   }
 
@@ -162,15 +170,20 @@ class Result extends React.Component {
     const values = queryString.parse(this.props.location.search);
     const cookies = new Cookies();
     const userId = cookies.get("id", { path: "/" });
-    this.setState({ userId: userId, selectedMood: values.mood, selectedPeople: values.people });
-
+    this.setState(
+      {
+        userId: userId,
+        selectedMood: values.mood,
+        selectedPeople: values.people,
+      },
+      () => this.loadSongFromModel()
+    );
     // Get weight
     vocaliAPI.getUser(userId).then((result) => {
       this.setState({ moodWeight: result.data.moodWeight.toString() });
       this.setState({ pitchWeight: result.data.pitchWeight.toString() });
       this.setState({ prefWeight: result.data.prefWeight.toString() });
     });
-    this.loadSongFromModel();
   }
 
   render() {
@@ -308,14 +321,16 @@ class Result extends React.Component {
               <div className="mood-score-div">
                 <p className="score-title">Mood</p>
                 <div>
-                  This song is <strong>99%</strong> {this.state.selectedMood}
+                  This song is <strong>{(currSong.moodScore * 100).toFixed(1)}%</strong>{" "}
+                  {this.state.selectedMood}
                 </div>
               </div>
               <div className="song-score-div">
                 <p className="score-title">Preference</p>
                 <div className="pref-score">
                   <p>
-                    <strong>99% of users</strong> with similar <br />
+                    <strong>{(currSong.prefScore * 100).toFixed(1)}% of users</strong> with similar{" "}
+                    <br />
                     music tastes as you <br />
                     liked this song
                   </p>
