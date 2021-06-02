@@ -13,10 +13,6 @@ const { Paragraph } = Typography;
 class Pitch extends React.Component {
   constructor(props) {
     super(props);
-    let voice;
-    let tuner;
-    let animation;
-    let state;
     this.getPitch = this.getPitch.bind(this);
     this.logPitch = this.logPitch.bind(this);
     this.stopPitch = this.stopPitch.bind(this);

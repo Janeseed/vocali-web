@@ -68,7 +68,7 @@ class LikeList extends React.Component {
     vocaliAPI
       .getEvaluation(userid)
       .then((result) => {
-        result.data.map((song) => {
+        result.data.forEach((song) => {
           if (song.category === "LIKE" && song.song) {
             songList.push(song.song);
           }
