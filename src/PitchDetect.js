@@ -109,8 +109,7 @@ class Pitch extends React.Component {
       <>
         <SimpleHeader back="/info" />
         <Paragraph className="description">
-          Click the button <br />
-          to record your voice
+          Sing from your lowest possible note to your highest possible note
         </Paragraph>
         <div className="pitches">
           <div className="currentpitches">

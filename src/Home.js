@@ -76,7 +76,7 @@ class Home extends React.Component {
               ))}
             </div>
             <Divider />
-            <div className="question">What kind of mood you like today?</div>
+            <div className="question">What type of mood are you feeling today?</div>
             <div className="checkable-tag-div">
               {tagsData2.map((tag) => (
                 <CheckableTag

@@ -216,10 +216,10 @@ class Result extends React.Component {
           </Card>
           <p className="result-description-small">Don't like the result?</p>
           <Button className="adjust-button" type="primary" onClick={this.handleAdjustModalChange}>
-            Adjust weight
+            Adjust factor importance
           </Button>
           <Modal
-            title="Weight control"
+            title="Adjust factor importance"
             visible={this.state.adjustModal}
             onCancel={this.handleAdjustModalChange}
             footer={[
@@ -232,11 +232,11 @@ class Result extends React.Component {
               </Button>,
             ]}
           >
-            <p>You can change the condition of recommendation with slider</p>
+            <p>You can change how much each factor influences the recommendation</p>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Mood</p>
               <p className="weight-slider-description">
-                How much the mood affect the recommendation
+                How much your mood factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
@@ -244,15 +244,15 @@ class Result extends React.Component {
                 onChange={this.onChangeMood}
                 buttonStyle="solid"
               >
-                <Radio.Button value="0">No affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
                 <Radio.Button value="0.5">Moderate</Radio.Button>
-                <Radio.Button value="1">Large affect</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Pitch</p>
               <p className="weight-slider-description">
-                How much the pitch affect the recommendation
+                How much your pitch factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
@@ -260,15 +260,15 @@ class Result extends React.Component {
                 onChange={this.onChangePitch}
                 buttonStyle="solid"
               >
-                <Radio.Button value="0">No affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
                 <Radio.Button value="0.5">Moderate</Radio.Button>
-                <Radio.Button value="1">Large affect</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Song Preference</p>
               <p className="weight-slider-description">
-                How much your like history affect the recommendation
+                How much your rating history factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
@@ -276,9 +276,9 @@ class Result extends React.Component {
                 onChange={this.onChangeSongPref}
                 buttonStyle="solid"
               >
-                <Radio.Button value="0">No affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
                 <Radio.Button value="0.5">Moderate</Radio.Button>
-                <Radio.Button value="1">Large affect</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
           </Modal>
@@ -308,15 +308,16 @@ class Result extends React.Component {
               <div className="mood-score-div">
                 <p className="score-title">Mood</p>
                 <div>
-                  This song is <strong>99%</strong> {this.state.mood}
+                  This song is <strong>99%</strong> {this.state.selectedMood}
                 </div>
               </div>
               <div className="song-score-div">
                 <p className="score-title">Preference</p>
                 <div className="pref-score">
                   <p>
-                    <strong>99% of users</strong> who have <br />
-                    similar tastes like this song
+                    <strong>99% of users</strong> with similar <br />
+                    music tastes as you <br />
+                    liked this song
                   </p>
                 </div>
               </div>

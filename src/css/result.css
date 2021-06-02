@@ -71,7 +71,7 @@
 
 .score-title {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .pref-score {
@@ -101,17 +101,13 @@ strong {
   font-weight: 600;
   font-size: 18px;
   margin-right: 1.2rem;
-  margin-top: 10px;
+  margin-top: 20px;
   margin-bottom: 0;
 }
 
 .weight-slider-description {
   font-size: 12px;
-  margin-bottom: 0;
-}
-
-.weight-slider {
-  width: 300px;
+  margin-bottom: 5px;
 }
 
 .weight-options {
