@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Cookies from "universal-cookie";
 
-import { Button, Skeleton, Card, Layout, Avatar, Tag, Modal, Radio } from "antd";
+import { Button, Skeleton, Card, Layout, Tag, Modal, Radio } from "antd";
 import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
@@ -50,32 +50,82 @@ class Result extends React.Component {
   state = {
     songList: [
       {
-        id: "x1yk42m_99d",
-        title: "문어의 꿈",
-        artist: "안예은",
-        publishedYear: 2021,
-        genre: "Dance",
-        mood: "happy",
-        pitch: "A#",
-        songNum: 48394,
+        songNum: 83377,
+        title: '만약에 (드라마"쾌도 홍길동")',
+        artist: "태연(소녀시대)",
+        year: 2008,
+        genre: "Ballad",
+        id: "1BHLy0efFQ8FFxyxgJtTMf",
+      },
+      {
+        songNum: 21022,
+        title: "흔들리는 꽃들 속에서 네 샴푸 향이 느껴진 거야",
+        artist: "장범준",
+        year: 2019,
+        genre: "Ballad",
+        id: "2skS61BQztE5bUpqJnBJAx",
+      },
+      {
+        songNum: 4772,
+        title: "취중진담",
+        artist: "전람회",
+        year: 1996,
+        genre: "Ballad",
+        id: "39FFkPyRLQtYBJkgV6ETAw",
+      },
+      {
+        songNum: 90515,
+        title: "시차(We Are)(Feat. 로꼬,그레이(GRAY))",
+        artist: "우원재",
+        year: 2017,
+        genre: "Hiphop",
+        id: "2SMq0lOqCTHayWa9juoI0d",
+      },
+      {
+        songNum: 91954,
+        title: "IndiGO",
+        artist: "Justhis,Kid Milli,NO:EL(장용준),Young B",
+        year: 2018,
+        genre: "Hiphop",
+        id: "5oxmx6B0kWTuCKgBzv8NpH",
       },
     ],
+    currSongIndex: 0,
     feedbacks: new Map(),
-    loading: false,
+    loading: true,
     adjustModal: false,
     explainModal: false,
     selectedFeedback: "",
-    moodWeight: "mid",
-    pitchWeight: "mid",
-    songPrefWeight: "mid",
-    mood: "",
+    moodWeight: "0",
+    pitchWeight: "0",
+    prefWeight: "0",
+    selectedMood: "",
+    selectedPeople: "",
+    userId: "",
   };
 
-  handleSelectedFeedback(tag, checked, songid) {
+  loadSongFromModel() {
+    // vocaliAPI
+    //   .getRecommendation(this.state.userId, this.state.selectedMood + "," + this.state.selectedPeople)
+    //   .then((result) => {
+    //     console.log(result);
+    //   });
+    this.setState({ loading: false });
+    // TODO: Input 받아서 this.state.songList에 넣기
+  }
+
+  handleSelectedFeedback(tag, checked, song) {
     if (checked) {
-      this.setState({ feedbacks: this.state.feedbacks.set(songid, tag) });
+      this.setState({ feedbacks: this.state.feedbacks.set(song.id, tag) });
     }
+    vocaliAPI.selectSong(this.state.userId, [song], tag);
     console.log(this.state.feedbacks);
+    if (this.state.currSongIndex < 4) {
+      this.setState({ currSongIndex: this.state.currSongIndex + 1 });
+    } else {
+      console.log("end!");
+      this.setState({ loading: true });
+    }
   }
 
   handleExplainModalChange = () => {
@@ -83,51 +133,48 @@ class Result extends React.Component {
   };
 
   handleAdjustModalChange = () => {
+    if (this.state.adjustModal) {
+      const cookies = new Cookies();
+      const userId = cookies.get("id", { path: "/" });
+      const data = {
+        moodWeight: parseFloat(this.state.moodWeight),
+        prefWeight: parseFloat(this.state.prefWeight),
+        pitchWeight: parseFloat(this.state.pitchWeight),
+      };
+      vocaliAPI.modifyUser(userId, data).then(() => window.location.reload());
+    }
     this.setState({ adjustModal: !this.state.adjustModal });
-    // TODO: API connection
   };
 
-  onChangeMood = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-    this.setState({
-      moodWeight: value,
-    });
+  onChangeMood = (e) => {
+    this.setState({ moodWeight: e.target.value });
   };
 
-  onChangePitch = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-    this.setState({
-      pitchWeight: value,
-    });
+  onChangePitch = (e) => {
+    this.setState({ pitchWeight: e.target.value });
   };
 
-  onChangeSongPref = (value) => {
-    if (isNaN(value)) {
-      return;
-    }
-    this.setState({
-      songPrefWeight: value,
-    });
+  onChangeSongPref = (e) => {
+    this.setState({ songPrefWeight: e.target.value });
   };
 
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
-    this.setState({ mood: values.mood });
     const cookies = new Cookies();
     const userId = cookies.get("id", { path: "/" });
-    // vocaliAPI.getRecommendation(userId, values.mood + "," + values.people).then((result) => {
-    //   console.log(result);
-    // });
-    // TODO: Input 받아서 this.state.songList에 넣기
+    this.setState({ userId: userId, selectedMood: values.mood, selectedPeople: values.people });
+
+    // Get weight
+    vocaliAPI.getUser(userId).then((result) => {
+      this.setState({ moodWeight: result.data.moodWeight.toString() });
+      this.setState({ pitchWeight: result.data.pitchWeight.toString() });
+      this.setState({ prefWeight: result.data.prefWeight.toString() });
+    });
+    this.loadSongFromModel();
   }
 
   render() {
-    const { loading } = this.state;
-
+    const currSong = this.state.songList[this.state.currSongIndex];
     return (
       <div style={{ backgroundColor: "#F6F0FE" }}>
         <InfoHeader />
@@ -137,58 +184,42 @@ class Result extends React.Component {
             If you leave feedback on the recommended song, <br />
             we will recommend a new song.
           </p>
-          {this.state.songList.map((song) => (
-            <Card
-              className="song-info"
-              title={`Song No. ${song.songNum}`}
-              extra={
-                <Button
-                  type="link"
-                  onClick={this.handleExplainModalChange}
-                  style={{ padding: "0" }}
-                >
-                  Why this song?
-                </Button>
-              }
-              actions={this.userActions.map((userAction) => (
-                <CheckableTag
-                  key={userAction.name}
-                  checked={this.state.feedbacks.get(song.id) === userAction.name}
-                  onChange={(checked) =>
-                    this.handleSelectedFeedback(userAction.name, checked, song.id)
-                  }
-                  style={{ width: "80%", padding: "5px", margin: "0" }}
-                >
-                  {userAction.icon}
-                  {userAction.displayName}
-                </CheckableTag>
-              ))}
-            >
-              <Skeleton loading={loading} avatar active>
-                <Meta
-                  className="card-skeleton"
-                  avatar={
-                    <Avatar
-                      style={{
-                        color: "#000000",
-                        backgroundColor: "#D9D9D9",
-                      }}
-                    >
-                      {song.pitch}
-                    </Avatar>
-                  }
-                  title={song.title}
-                  description={song.artist}
-                />
-              </Skeleton>
-            </Card>
-          ))}
+          <Card
+            className="song-info"
+            title={`Song No. ${currSong.songNum}`}
+            extra={
+              <Button type="link" onClick={this.handleExplainModalChange} style={{ padding: "0" }}>
+                Why this song?
+              </Button>
+            }
+            actions={this.userActions.map((userAction) => (
+              <CheckableTag
+                key={userAction.name}
+                checked={this.state.feedbacks.get(currSong.id) === userAction.name}
+                onChange={(checked) =>
+                  this.handleSelectedFeedback(userAction.name, checked, currSong)
+                }
+                style={{ width: "80%", padding: "5px", margin: "0" }}
+              >
+                {userAction.icon}
+                {userAction.displayName}
+              </CheckableTag>
+            ))}
+          >
+            <Skeleton loading={this.state.loading} active>
+              <Meta
+                className="card-skeleton"
+                title={currSong.title}
+                description={currSong.artist}
+              />
+            </Skeleton>
+          </Card>
           <p className="result-description-small">Don't like the result?</p>
           <Button className="adjust-button" type="primary" onClick={this.handleAdjustModalChange}>
-            Adjust weight
+            Adjust factor importance
           </Button>
           <Modal
-            title="Weight control"
+            title="Adjust factor importance"
             visible={this.state.adjustModal}
             onCancel={this.handleAdjustModalChange}
             footer={[
@@ -201,11 +232,11 @@ class Result extends React.Component {
               </Button>,
             ]}
           >
-            <p>You can change the condition of recommendation with slider</p>
+            <p>You can change how much each factor influences the recommendation</p>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Mood</p>
               <p className="weight-slider-description">
-                How much the mood affect the recommendation
+                How much your mood factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
@@ -213,15 +244,15 @@ class Result extends React.Component {
                 onChange={this.onChangeMood}
                 buttonStyle="solid"
               >
-                <Radio.Button value="small">No affect</Radio.Button>
-                <Radio.Button value="mid">Moderate</Radio.Button>
-                <Radio.Button value="large">Large affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
+                <Radio.Button value="0.5">Moderate</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Pitch</p>
               <p className="weight-slider-description">
-                How much the pitch affect the recommendation
+                How much your pitch factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
@@ -229,25 +260,25 @@ class Result extends React.Component {
                 onChange={this.onChangePitch}
                 buttonStyle="solid"
               >
-                <Radio.Button value="small">No affect</Radio.Button>
-                <Radio.Button value="mid">Moderate</Radio.Button>
-                <Radio.Button value="large">Large affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
+                <Radio.Button value="0.5">Moderate</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
             <div className="weight-control-slider">
               <p className="weight-slider-title">Song Preference</p>
               <p className="weight-slider-description">
-                How much your like history affect the recommendation
+                How much your rating history factors into recommendations
               </p>
               <Radio.Group
                 className="weight-options"
-                defaultValue={this.state.songPrefWeight}
+                defaultValue={this.state.prefWeight}
                 onChange={this.onChangeSongPref}
                 buttonStyle="solid"
               >
-                <Radio.Button value="small">No affect</Radio.Button>
-                <Radio.Button value="mid">Moderate</Radio.Button>
-                <Radio.Button value="large">Large affect</Radio.Button>
+                <Radio.Button value="0">None</Radio.Button>
+                <Radio.Button value="0.5">Moderate</Radio.Button>
+                <Radio.Button value="1">Strong</Radio.Button>
               </Radio.Group>
             </div>
           </Modal>
@@ -277,15 +308,16 @@ class Result extends React.Component {
               <div className="mood-score-div">
                 <p className="score-title">Mood</p>
                 <div>
-                  This song is <strong>99%</strong> {this.state.mood}
+                  This song is <strong>99%</strong> {this.state.selectedMood}
                 </div>
               </div>
               <div className="song-score-div">
                 <p className="score-title">Preference</p>
                 <div className="pref-score">
                   <p>
-                    <strong>99% of users</strong> who have <br />
-                    similar tastes like this song
+                    <strong>99% of users</strong> with similar <br />
+                    music tastes as you <br />
+                    liked this song
                   </p>
                 </div>
               </div>

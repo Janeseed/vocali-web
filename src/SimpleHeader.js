@@ -6,7 +6,6 @@ import Logo from "./vocali_logo2.svg";
 import "./css/header.css";
 
 const SimpleHeader = (input) => {
-  console.log(input.back);
   if (input.back === "none") {
     return (
       <div className="navbar">

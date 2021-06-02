@@ -1,43 +1,37 @@
 .weight-dashboard {
-    width: 96vw;
-    left: cal(50%-96vw/2);
+  width: 96vw;
+  left: cal(50%-96vw/2);
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 
-    border-radius: 17px;
+  border-radius: 17px;
 }
 
 .consideration-title {
-    width: 50vw;
+  width: 50vw;
 
-    /* Heading 24 / bold */
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 32px;
-    /* or 133% */
+  /* Heading 24 / bold */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  /* or 133% */
 
-    order: 0;
+  order: 0;
 }
 
 .slider-name {
-    /* Body 14 / medium */
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 22px;
-    /* identical to box height, or 157% */
+  /* Body 14 / medium */
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  /* identical to box height, or 157% */
 
-    color: #000000;
-}
-
-.weight-slider {
-    text-align: left;
-
-    order: 0;
+  color: #000000;
 }

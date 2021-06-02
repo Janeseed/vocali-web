@@ -13,10 +13,6 @@ const { Paragraph } = Typography;
 class Pitch extends React.Component {
   constructor(props) {
     super(props);
-    let voice;
-    let tuner;
-    let animation;
-    let state;
     this.getPitch = this.getPitch.bind(this);
     this.logPitch = this.logPitch.bind(this);
     this.stopPitch = this.stopPitch.bind(this);
@@ -113,8 +109,7 @@ class Pitch extends React.Component {
       <>
         <SimpleHeader back="/info" />
         <Paragraph className="description">
-          Click the button <br />
-          to record your voice
+          Sing from your lowest possible note to your highest possible note
         </Paragraph>
         <div className="pitches">
           <div className="currentpitches">

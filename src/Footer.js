@@ -11,12 +11,12 @@ const { Footer } = Layout;
 const VocaliFooter = () => {
   const [selectedPeople, setPeople] = useState("");
   const [selectedMood, setMood] = useState("");
-  const cookies = new Cookies();
 
   useEffect(() => {
+    const cookies = new Cookies();
     setMood(cookies.get("mood", { path: "/" }));
     setPeople(cookies.get("people", { path: "/" }));
-  }, [cookies]);
+  }, []);
 
   return (
     <Footer className="vocali-footer">
