@@ -38,7 +38,7 @@ class SongPref extends React.Component {
     const { selectedSongs } = this.state;
     return (
       <div>
-        <SimpleHeader back="/pitch" />
+        <SimpleHeader history={this.props.history} back="/pitch" />
         <Paragraph className="description">
           Next,<br></br>Check all the songs you would sing at Noraebang!
         </Paragraph>

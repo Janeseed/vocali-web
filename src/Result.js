@@ -192,11 +192,33 @@ class Result extends React.Component {
     });
   }
 
+  pitchTags(pitchScore) {
+    console.log(pitchScore);
+    if (pitchScore > 0.4)
+      return (
+        <>
+          <Tag color="#6200ee">Easy</Tag> <Tag>Normal</Tag> <Tag>Hard</Tag>
+        </>
+      );
+    else if (pitchScore > 0.2)
+      return (
+        <>
+          <Tag>Easy</Tag> <Tag color="#6200ee">Normal</Tag> <Tag>Hard</Tag>
+        </>
+      );
+    else
+      return (
+        <>
+          <Tag>Easy</Tag> <Tag>Normal</Tag> <Tag color="#6200ee">Hard</Tag>
+        </>
+      );
+  }
+
   render() {
     const currSong = this.state.songList[this.state.currSongIndex];
     return (
       <div style={{ backgroundColor: "#F6F0FE" }}>
-        <InfoHeader />
+        <InfoHeader history={this.props.history} />
         <Content className="result-contents">
           <p className="result-description">Vocali found the best song for you!</p>
           <p className="result-description-small">
@@ -318,11 +340,7 @@ class Result extends React.Component {
             <div className="song-score-info">
               <div className="pitch-score-div">
                 <p className="score-title">Pitch</p>
-                <div>
-                  <Tag color="#6200ee">Easy</Tag>
-                  <Tag>Normal</Tag>
-                  <Tag>Hard</Tag>
-                </div>
+                <div>{this.pitchTags(currSong.pitchScore)}</div>
               </div>
               <div className="mood-score-div">
                 <p className="score-title">Mood</p>
@@ -335,9 +353,9 @@ class Result extends React.Component {
                 <p className="score-title">Preference</p>
                 <div className="pref-score">
                   <p>
-                    <strong>{(currSong.prefScore * 100).toFixed(1)}%</strong> match based on{" "}
+                    <strong>{(currSong.prefScore * 100).toFixed(1)}%</strong> match based on <br />
+                    users with similar
                     <br />
-                    users with similar<br />
                     music taste as you
                   </p>
                 </div>
@@ -345,7 +363,7 @@ class Result extends React.Component {
             </div>
           </Modal>
         </Content>
-        <VocaliFooter />
+        <VocaliFooter history={this.props.history} />
       </div>
     );
   }

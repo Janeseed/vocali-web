@@ -107,7 +107,7 @@ class Pitch extends React.Component {
   render() {
     return (
       <>
-        <SimpleHeader back="/info" />
+        <SimpleHeader history={this.props.history} back="/info" />
         <Paragraph className="description">
           Sing from your lowest possible note to your highest possible note
         </Paragraph>

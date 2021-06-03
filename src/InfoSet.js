@@ -52,7 +52,7 @@ class InfoSet extends React.Component {
   render() {
     return (
       <>
-        <SimpleHeader back="none" />
+        <SimpleHeader history={this.props.history} back="none" />
         <Paragraph className="description">
           First,<br></br> Put in your information
         </Paragraph>

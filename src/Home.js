@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Layout, Tag, Divider } from "antd";
+import { Button, Layout, Tag, Divider, Modal } from "antd";
 
 import "./css/home.css";
 import Cookies from "universal-cookie";
@@ -20,7 +20,9 @@ class Home extends React.Component {
     this.state = {
       selectedPeople: "",
       selectedMood: "",
+      showModal: false,
     };
+    this.nextPath = this.nextPath.bind(this);
   }
 
   componentDidMount() {
@@ -50,10 +52,30 @@ class Home extends React.Component {
     this.cookies.set("mood", nextMood, { path: "/" });
   }
 
+  handleModalChange = () => {
+    this.setState({
+      showModal: !this.state.showModal,
+    });
+  };
+
+  handleFindButtonClick = () => {
+    const selectedMood = this.state.selectedMood;
+    const selectedPeople = this.state.selectedPeople;
+    if (selectedMood === "" || selectedPeople === "") {
+      this.handleModalChange();
+      return;
+    }
+    this.props.history.push("/result?people=" + selectedPeople + "&mood=" + selectedMood);
+  };
+
   render() {
     return (
       <Layout className="layout">
-        <InfoHeader people={this.state.selectedPeople} mood={this.state.selectedMood} />
+        <InfoHeader
+          history={this.props.history}
+          people={this.state.selectedPeople}
+          mood={this.state.selectedMood}
+        />
         <Content style={{ backgroundColor: "#ffffff" }}>
           <div className="selection-board">
             <div className="mood-selection">
@@ -92,17 +114,25 @@ class Home extends React.Component {
           </div>
           <Button
             className="find-button standard"
-            onClick={() =>
-              this.nextPath(
-                "/result?people=" + this.state.selectedPeople + "&mood=" + this.state.selectedMood
-              )
-            }
+            onClick={this.handleFindButtonClick}
             type="primary"
           >
             FIND SONG
           </Button>
         </Content>
-        {/* <VocaliFooter /> */}
+
+        <Modal
+          title="Warning"
+          visible={this.state.showModal}
+          onOk={this.handleModalChange}
+          footer={[
+            <Button key="ok" type="primary" onClick={this.handleModalChange}>
+              OK
+            </Button>,
+          ]}
+        >
+          <p>You should select one tag from each category :)</p>
+        </Modal>
       </Layout>
     );
   }

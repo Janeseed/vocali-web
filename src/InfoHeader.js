@@ -9,7 +9,7 @@ import "./css/header.css";
 
 const { Header } = Layout;
 
-const InfoHeader = ({ people, mood }) => {
+const InfoHeader = ({ history, people, mood }) => {
   const [selectedPeople, setPeople] = useState(people);
   const [selectedMood, setMood] = useState(mood);
   const [userName, setName] = useState("-");
@@ -39,9 +39,9 @@ const InfoHeader = ({ people, mood }) => {
   return (
     <Header className="header">
       <div className="row">
-        <a href="/" style={{ lineHeight: 0 }}>
+        <div onClick={() => history.push("/home")} style={{ lineHeight: 0 }}>
           <img className="logo-left" src={Logo} alt="Vocali Logo" />
-        </a>
+        </div>
         <div className="user-info">
           <Avatar className="avatar" style={{ backgroundColor: "#D9D9D9" }}>
             {userName.slice(0, 1)}

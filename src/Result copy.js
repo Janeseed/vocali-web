@@ -137,7 +137,7 @@ const Result = () => {
   const currSong = this.state.songList[this.state.currSongIndex];
   return (
     <div style={{ backgroundColor: "#F6F0FE" }}>
-      <InfoHeader />
+      <InfoHeader history={this.props.history} />
       <Content className="result-contents">
         <p className="result-description">Vocali found the best song for you!</p>
         <p className="result-description-small">
@@ -280,7 +280,7 @@ const Result = () => {
           </div>
         </Modal>
       </Content>
-      <VocaliFooter />
+      <VocaliFooter history={this.props.history} />
     </div>
   );
 };

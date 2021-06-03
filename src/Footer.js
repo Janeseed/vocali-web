@@ -8,7 +8,7 @@ import "./css/footer.css";
 
 const { Footer } = Layout;
 
-const VocaliFooter = () => {
+const VocaliFooter = ({ history }) => {
   const [selectedPeople, setPeople] = useState("");
   const [selectedMood, setMood] = useState("");
 
@@ -19,27 +19,32 @@ const VocaliFooter = () => {
   }, []);
 
   return (
-    <Footer className="vocali-footer">
-      <div className="buttons">
-        <a href="/home" className="footer-button">
-          <CoffeeOutlined className="footer-button-icon" />
-          <span>Mood</span>
-        </a>
-        <Divider type="vertical" />
-        <a
-          href={"/result?people=" + selectedPeople + "&mood=" + selectedMood}
-          className="footer-button"
-        >
-          <HomeOutlined className="footer-button-icon" />
-          <span>Result</span>
-        </a>
-        <Divider type="vertical" />
-        <a href="/likelist" className="footer-button">
-          <HeartOutlined className="footer-button-icon" />
-          <span>Like List</span>
-        </a>
-      </div>
-    </Footer>
+    <>
+      <div style={{ height: "100px", backgroundColor: "#f6f0fe" }}></div>
+      <Footer className="vocali-footer">
+        <div className="buttons">
+          <div onClick={() => history.push("/home")} className="footer-button">
+            <CoffeeOutlined className="footer-button-icon" />
+            <span>Mood</span>
+          </div>
+          <Divider type="vertical" />
+          <div
+            onClick={() =>
+              history.push("/result?people=" + selectedPeople + "&mood=" + selectedMood)
+            }
+            className="footer-button"
+          >
+            <HomeOutlined className="footer-button-icon" />
+            <span>Result</span>
+          </div>
+          <Divider type="vertical" />
+          <div onClick={() => history.push("/likelist")} className="footer-button">
+            <HeartOutlined className="footer-button-icon" />
+            <span>Like List</span>
+          </div>
+        </div>
+      </Footer>
+    </>
   );
 };
 

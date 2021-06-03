@@ -42,7 +42,7 @@ class Weight extends React.Component {
     const { moodWeight, pitchWeight, songPrefWeight } = this.state;
     return (
       <Layout className="layout">
-        <InfoHeader />
+        <InfoHeader history={this.props.history} />
         <Content style={{ textAlign: "center", backgroundColor: "#ffffff" }}>
           <div className="weight-dashboard">
             <div className="consideration-title">Weights of Consideration</div>

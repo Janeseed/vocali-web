@@ -82,7 +82,7 @@ class LikeList extends React.Component {
     console.log(this.state.songList);
     return (
       <>
-        <InfoHeader />
+        <InfoHeader history={this.props.history} />
         <div className="like-list-div">
           {this.state.songList.map((song) => (
             <Card
@@ -101,7 +101,7 @@ class LikeList extends React.Component {
           ))}
           <div style={{ height: "20px" }} />
         </div>
-        <VocaliFooter />
+        <VocaliFooter history={this.props.history} />
       </>
     );
   }

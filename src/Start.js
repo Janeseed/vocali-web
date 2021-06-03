@@ -15,7 +15,7 @@ class Start extends React.Component {
   render() {
     return (
       <>
-        <SimpleHeader back="none" />
+        <SimpleHeader history={this.props.history} back="none" />
         <div className="row-flex-container">
           <Paragraph className="slogan">
             Vocali will find you a{" "}
