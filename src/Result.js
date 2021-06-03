@@ -233,7 +233,7 @@ class Result extends React.Component {
               />
             </Skeleton>
           </Card>
-          <p className="result-description-small">Don't like the result?</p>
+          <p className="result-description-small">Keep getting unsatisfactory results?</p>
           <Button className="adjust-button" type="primary" onClick={this.handleAdjustModalChange}>
             Adjust factor importance
           </Button>
@@ -335,10 +335,10 @@ class Result extends React.Component {
                 <p className="score-title">Preference</p>
                 <div className="pref-score">
                   <p>
-                    <strong>{(currSong.prefScore * 100).toFixed(1)}% of users</strong> with similar{" "}
+                    <strong>{(currSong.prefScore * 100).toFixed(1)}%</strong> match based on{" "}
                     <br />
-                    music tastes as you <br />
-                    liked this song
+                    users with similar<br />
+                    music taste as you
                   </p>
                 </div>
               </div>

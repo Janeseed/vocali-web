@@ -54,7 +54,7 @@ class InfoSet extends React.Component {
       <>
         <SimpleHeader back="none" />
         <Paragraph className="description">
-          First,<br></br> Put your brief information
+          First,<br></br> Put in your information
         </Paragraph>
         <div className="inputs">
           <div className="input-div">
