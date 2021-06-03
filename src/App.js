@@ -12,7 +12,7 @@ import LikeList from "./List";
 
 function App() {
   return (
-    <Router>
+    <Router basename='/vocali-web'>
       <div>
         <Switch>
           <Route exact path="/" component={Start} />
