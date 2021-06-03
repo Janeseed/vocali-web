@@ -149,7 +149,13 @@ class Result extends React.Component {
         prefWeight: parseFloat(this.state.prefWeight),
         pitchWeight: parseFloat(this.state.pitchWeight),
       };
-      vocaliAPI.modifyUser(userId, data).then(() => window.location.reload());
+      vocaliAPI
+        .modifyUser(userId, data)
+        .then(() =>
+          this.props.history.push(
+            "/result?people=" + this.state.selectedPeople + "&mood=" + this.state.selectedMood
+          )
+        );
     }
     this.setState({ adjustModal: !this.state.adjustModal });
   };
