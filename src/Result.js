@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Cookies from "universal-cookie";
 
-import { Button, Skeleton, Card, Layout, Tag, Modal, Radio, Tooltip } from "antd";
+import { Button, Skeleton, Card, Layout, Tag, Modal, Radio } from "antd";
 import { FrownOutlined, HeartOutlined, QuestionOutlined, WarningOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
