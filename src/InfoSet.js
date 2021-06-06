@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography, Input, Modal } from "antd";
+import { Button, Typography, Input, Modal, Spin } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { withRouter } from "react-router-dom";
 import "./css/common.css";
@@ -15,6 +15,7 @@ class InfoSet extends React.Component {
     name: "",
     age: "",
     modal: false,
+    loading: false,
   };
   handleNameChange = (e) => {
     this.setState({
@@ -39,12 +40,14 @@ class InfoSet extends React.Component {
       this.handleModalChange();
       return;
     }
+    this.setState({ loading: true });
     vocaliAPI.createUser(name, age).then((response) => {
       const userId = response.data.id;
       const cookies = new Cookies();
       cookies.set("id", userId, { path: "/" });
       cookies.remove("mood", { path: "/" });
       cookies.remove("people", { path: "/" });
+      this.setState({ loading: false });
       this.props.history.push("/pitch");
     });
   };
@@ -77,6 +80,7 @@ class InfoSet extends React.Component {
             />
           </div>
         </div>
+        <Spin className="loading-next" spinning={this.state.loading} delay={500} />
         <Button className="next-button" onClick={this.setInfo} type="primary">
           NEXT
         </Button>

@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom";
 import queryString from "query-string";
 import Cookies from "universal-cookie";
 
-import { Button, Skeleton, Card, Layout, Tag, Modal, Radio } from "antd";
-import { FrownOutlined, HeartOutlined, QuestionOutlined } from "@ant-design/icons";
+import { Button, Skeleton, Card, Layout, Tag, Modal, Radio, Tooltip } from "antd";
+import { FrownOutlined, HeartOutlined, QuestionOutlined, WarningOutlined } from "@ant-design/icons";
 
 import "./css/home.css";
 import "./css/result.css";
@@ -17,6 +17,68 @@ const { Meta } = Card;
 const { CheckableTag } = Tag;
 
 class Result extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      songList: [
+        {
+          songNum: 83377,
+          title: '만약에 (드라마"쾌도 홍길동")',
+          artist: "태연(소녀시대)",
+          year: 2008,
+          genre: "Ballad",
+          id: "1BHLy0efFQ8FFxyxgJtTMf",
+        },
+        {
+          songNum: 21022,
+          title: "흔들리는 꽃들 속에서 네 샴푸 향이 느껴진 거야",
+          artist: "장범준",
+          year: 2019,
+          genre: "Ballad",
+          id: "2skS61BQztE5bUpqJnBJAx",
+        },
+        {
+          songNum: 4772,
+          title: "취중진담",
+          artist: "전람회",
+          year: 1996,
+          genre: "Ballad",
+          id: "39FFkPyRLQtYBJkgV6ETAw",
+        },
+        {
+          songNum: 90515,
+          title: "시차(We Are)(Feat. 로꼬,그레이(GRAY))",
+          artist: "우원재",
+          year: 2017,
+          genre: "Hiphop",
+          id: "2SMq0lOqCTHayWa9juoI0d",
+        },
+        {
+          songNum: 91954,
+          title: "IndiGO",
+          artist: "Justhis,Kid Milli,NO:EL(장용준),Young B",
+          year: 2018,
+          genre: "Hiphop",
+          id: "5oxmx6B0kWTuCKgBzv8NpH",
+        },
+      ],
+      currSongIndex: 0,
+      feedbacks: new Map(),
+      loading: true,
+      adjustModal: false,
+      explainModal: false,
+      selectedFeedback: "",
+      moodWeight: "0.5",
+      pitchWeight: "0.5",
+      prefWeight: "0.5",
+      selectedMood: "",
+      selectedPeople: "",
+      adjustAvailable: true,
+      userId: "",
+    };
+    this.checkAdjustAvailability = this.checkAdjustAvailability.bind(this);
+  }
+
   userActions = [
     {
       name: "dislike",
@@ -46,63 +108,6 @@ class Result extends React.Component {
       icon: <HeartOutlined className="feedback-tag-icon" />,
     },
   ];
-
-  state = {
-    songList: [
-      {
-        songNum: 83377,
-        title: '만약에 (드라마"쾌도 홍길동")',
-        artist: "태연(소녀시대)",
-        year: 2008,
-        genre: "Ballad",
-        id: "1BHLy0efFQ8FFxyxgJtTMf",
-      },
-      {
-        songNum: 21022,
-        title: "흔들리는 꽃들 속에서 네 샴푸 향이 느껴진 거야",
-        artist: "장범준",
-        year: 2019,
-        genre: "Ballad",
-        id: "2skS61BQztE5bUpqJnBJAx",
-      },
-      {
-        songNum: 4772,
-        title: "취중진담",
-        artist: "전람회",
-        year: 1996,
-        genre: "Ballad",
-        id: "39FFkPyRLQtYBJkgV6ETAw",
-      },
-      {
-        songNum: 90515,
-        title: "시차(We Are)(Feat. 로꼬,그레이(GRAY))",
-        artist: "우원재",
-        year: 2017,
-        genre: "Hiphop",
-        id: "2SMq0lOqCTHayWa9juoI0d",
-      },
-      {
-        songNum: 91954,
-        title: "IndiGO",
-        artist: "Justhis,Kid Milli,NO:EL(장용준),Young B",
-        year: 2018,
-        genre: "Hiphop",
-        id: "5oxmx6B0kWTuCKgBzv8NpH",
-      },
-    ],
-    currSongIndex: 0,
-    feedbacks: new Map(),
-    loading: true,
-    adjustModal: false,
-    explainModal: false,
-    selectedFeedback: "",
-    moodWeight: "0",
-    pitchWeight: "0",
-    prefWeight: "0",
-    selectedMood: "",
-    selectedPeople: "",
-    userId: "",
-  };
 
   loadSongFromModel() {
     console.log(this.state.userId);
@@ -161,16 +166,37 @@ class Result extends React.Component {
   };
 
   onChangeMood = (e) => {
-    this.setState({ moodWeight: e.target.value });
+    this.setState({ moodWeight: e.target.value }, () => this.checkAdjustAvailability());
   };
 
   onChangePitch = (e) => {
-    this.setState({ pitchWeight: e.target.value });
+    this.setState({ pitchWeight: e.target.value }, () => this.checkAdjustAvailability());
   };
 
   onChangeSongPref = (e) => {
-    this.setState({ songPrefWeight: e.target.value });
+    this.setState({ prefWeight: e.target.value }, () => this.checkAdjustAvailability());
   };
+
+  checkAdjustAvailability() {
+    console.log(this.state.adjustAvailable);
+    console.log(this.state.moodWeight);
+    console.log(this.state.pitchWeight);
+    console.log(this.state.prefWeight);
+    if (
+      this.state.adjustAvailable &&
+      this.state.moodWeight === "0" &&
+      this.state.pitchWeight === "0" &&
+      this.state.prefWeight === "0"
+    )
+      this.setState({ adjustAvailable: false });
+    else if (
+      !this.state.adjustAvailable &&
+      (this.state.moodWeight !== "0" ||
+        this.state.pitchWeight !== "0" ||
+        this.state.prefWeight !== "0")
+    )
+      this.setState({ adjustAvailable: true });
+  }
 
   componentDidMount() {
     const values = queryString.parse(this.props.location.search);
@@ -193,7 +219,6 @@ class Result extends React.Component {
   }
 
   pitchTags(pitchScore) {
-    console.log(pitchScore);
     if (pitchScore > 0.4)
       return (
         <>
@@ -212,6 +237,32 @@ class Result extends React.Component {
           <Tag>Easy</Tag> <Tag>Normal</Tag> <Tag color="#6200ee">Hard</Tag>
         </>
       );
+  }
+
+  adjustModalFooter(status) {
+    if (status) {
+      return [
+        <Button key="weight-control-confirm" type="primary" onClick={this.handleAdjustModalChange}>
+          CONFIRM
+        </Button>,
+      ];
+    } else
+      return [
+        <WarningOutlined className="warning-icon" />,
+        <div className="warning">
+          Make sure you select at least
+          <br />
+          one factor to affect the result
+        </div>,
+        <Button
+          key="weight-control-confirm"
+          type="primary"
+          onClick={this.handleAdjustModalChange}
+          disabled
+        >
+          CONFIRM
+        </Button>,
+      ];
   }
 
   render() {
@@ -263,15 +314,7 @@ class Result extends React.Component {
             title="Adjust factor importance"
             visible={this.state.adjustModal}
             onCancel={this.handleAdjustModalChange}
-            footer={[
-              <Button
-                key="weight-control-confirm"
-                type="primary"
-                onClick={this.handleAdjustModalChange}
-              >
-                CONFIRM
-              </Button>,
-            ]}
+            footer={this.adjustModalFooter(this.state.adjustAvailable)}
           >
             <p>You can change how much each factor influences the recommendation</p>
             <div className="weight-control-slider">

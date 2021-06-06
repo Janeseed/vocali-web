@@ -113,3 +113,23 @@ strong {
 .weight-options {
   margin: 5px 0;
 }
+
+.ant-modal-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.warning {
+  font-size: 11px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 20px;
+  margin-left: 10px;
+  line-height: 12px;
+}
+
+.warning-icon {
+  font-size: 20px;
+  margin: auto 0;
+}
