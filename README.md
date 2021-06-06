@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+<p align="center">
+<img src="https://user-images.githubusercontent.com/46590330/120651419-b7686c80-c4b9-11eb-8b19-5fd8f41851e5.png" width="30%"/>
+<br/>
+</p>
+<p>This project is for the Design Project of <b>KAIST CS492E: "Human-AI Interaction" course</b>.<p/>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Name & Purpose
 
-## Available Scripts
+**Vocali**
 
-In the project directory, you can run:
+This service recommends songs based on user information for those who have difficulty choosing songs to sing in karaoke. Users record their voices to analyze their vocal range, and input their favorite songs and current moods. Accordingly, the system recommends appropriate songs through machine learning model. Users can get a explanation of the recommended results, or they can send feedback on the recommended results to further customize the results.
 
-### `npm start`
+## Build with
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### Framework
+* [Ant-Design](https://ant.design): for effectively connecting graphic & interaction design in Figma with front-end developing
+* [React JS](https://reactjs.org)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+#### Libraries
+* [web-audio-daw](https://github.com/rserota/wad): recording user voice via microphone on browser
 
-### `npm test`
+#### Deploy
+* [Github Pages](https://pages.github.com)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project Status
 
-### `npm run build`
+This project is almost completed. We are going to conduct user study to find out whether this system can actually help users.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation and Setup Instructions
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Installation:
 
-### `npm run eject`
+`npm install`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To Run Development Suite:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`npm run start`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To Build Application:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`npm run build`
 
-## Learn More
+To Update github pages
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`npm run deploy`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To Visit App:
 
-### Code Splitting
+`localhost:3000/vocali-web`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Project Screenshots
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/46590330/120652268-948a8800-c4ba-11eb-9b2d-7b9d718bbd49.png" width="20%"/>
+  <img src="https://user-images.githubusercontent.com/46590330/120652530-d1ef1580-c4ba-11eb-82e7-d02ab088d9bd.png" width="20%"/>
+  <img src="https://user-images.githubusercontent.com/46590330/120652545-d3204280-c4ba-11eb-9e4a-b0acbb80fcca.png" width="20%"/>
+  <img src="https://user-images.githubusercontent.com/46590330/120652527-d1567f00-c4ba-11eb-83f9-714e5d2d78d3.png" width="20%"/>
+</p>
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/46590330/120652537-d287ac00-c4ba-11eb-81fa-0749ce492f0e.png" width="20%"/>
+  <img src="https://user-images.githubusercontent.com/46590330/120652519-cf8cbb80-c4ba-11eb-8c0d-bac789043c0a.png" width="20%"/>
+  <img src="https://user-images.githubusercontent.com/46590330/120652523-d0bde880-c4ba-11eb-95fc-00e5b6491740.png" width="20%"/>
+</p>
 
-### Analyzing the Bundle Size
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Featured Pages
 
-### Making a Progressive Web App
+#### `src/App.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Routing each pages
 
-### Advanced Configuration
+#### `src/PitchDetect.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Recording users' voice and analyze vocal range.
 
-### Deployment
+#### `src/SonfPref.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Page that shows list of the songs that could be the seed for the recommendation model. Users can select the songs that they like to sing among this list.
 
-### `npm run build` fails to minify
+#### `src/Home.js`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Page that contains several categories that can indicate users' current mood. The selection affects the recommendation result.
+
+#### `src/Result.js`
+
+Page that shows the recommendation result. It shows the recommending song one by one and users should enter their feedback to the song to see the next recommendation. Also, users can see the explanation about the recommendation and change the weight of each factor to control the model.
+
+#### `src/List.js`
+
+Page that shows the list of the songs that the user liked.
+
+
+### Components
+
+#### `SimpleHeader.js` `InfoHeader.js`
+
+Header for many pages.
+
+#### `Footer.js`
+
+Footer for result pages.
