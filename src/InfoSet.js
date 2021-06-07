@@ -15,7 +15,7 @@ class InfoSet extends React.Component {
     name: "",
     age: "",
     modal: false,
-    loading: false,
+    loading: true,
   };
   handleNameChange = (e) => {
     this.setState({
@@ -81,7 +81,7 @@ class InfoSet extends React.Component {
               />
             </div>
           </div>
-          <div>
+          <div style={{ width: "100%", alignItems: "center", textAlign: "center" }}>
             <Spin className="loading-next" spinning={this.state.loading} delay={500} />
             <Button className="next-button" onClick={this.setInfo} type="primary">
               NEXT
