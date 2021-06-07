@@ -106,42 +106,44 @@ class Pitch extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="custom-container">
         <SimpleHeader history={this.props.history} back="/info" />
-        <Paragraph className="description">
-          Sing from your lowest possible note to your highest possible note
-        </Paragraph>
-        <div className="pitches">
-          <div className="currentpitches">
-            Current Pitch
-            <div className="pitchDisplay">{this.state.currentPitch}</div>
+        <div className="flex-row-container">
+          <Paragraph className="description">
+            Sing from your lowest possible note to your highest possible note
+          </Paragraph>
+          <div className="pitches">
+            <div className="currentpitches">
+              Current Pitch
+              <div className="pitchDisplay">{this.state.currentPitch}</div>
+            </div>
+            <Divider />
+            <div className="maxminpitches">
+              <div>
+                Min Pitch
+                <div className="pitchDisplay">{this.state.minPitch[1]}</div>
+              </div>
+              <div>
+                Max Pitch
+                <div className="pitchDisplay">{this.state.maxPitch[1]}</div>
+              </div>
+            </div>
           </div>
-          <Divider />
-          <div className="maxminpitches">
-            <div>
-              Min Pitch
-              <div className="pitchDisplay">{this.state.minPitch[1]}</div>
-            </div>
-            <div>
-              Max Pitch
-              <div className="pitchDisplay">{this.state.maxPitch[1]}</div>
-            </div>
+          <div className="pitch-buttons">
+            <Button className="record-button" type="primary" onClick={this.handleRecordChange}>
+              {this.bool2str(this.state.record)}
+            </Button>
+            <Button
+              className="stop-button"
+              type="primary"
+              disabled={this.state.disabled || this.state.record}
+              onClick={this.onNextClick}
+            >
+              NEXT
+            </Button>
           </div>
         </div>
-        <div className="pitch-buttons">
-          <Button className="record-button" type="primary" onClick={this.handleRecordChange}>
-            {this.bool2str(this.state.record)}
-          </Button>
-          <Button
-            className="stop-button"
-            type="primary"
-            disabled={this.state.disabled || this.state.record}
-            onClick={this.onNextClick}
-          >
-            NEXT
-          </Button>
-        </div>
-      </>
+      </div>
     );
   }
 }

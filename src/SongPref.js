@@ -37,38 +37,40 @@ class SongPref extends React.Component {
   render() {
     const { selectedSongs } = this.state;
     return (
-      <div>
+      <div className="custom-container">
         <SimpleHeader history={this.props.history} back="/pitch" />
-        <Paragraph className="description">
-          Next,<br></br>Check all the songs you would sing at Noraebang!
-        </Paragraph>
-        <div className="song-pref-div">
-          {songlist.map((song) => (
-            <Card
-              size="small"
-              className="song-pref-card"
-              title={song.title}
-              extra={
-                <CheckableTag
-                  key={song.songNum}
-                  checked={selectedSongs.indexOf(song) > -1}
-                  onChange={(checked) => this.handleSongPref(song, checked)}
-                >
-                  <HeartOutlined />
-                </CheckableTag>
-              }
-            >
-              <p>{song.artist}</p>
-            </Card>
-          ))}
+        <div className="flex-row-container">
+          <Paragraph className="description">
+            Next,<br></br>Check all the songs you would sing at Noraebang!
+          </Paragraph>
+          <div className="song-pref-div">
+            {songlist.map((song) => (
+              <Card
+                size="small"
+                className="song-pref-card"
+                title={song.title}
+                extra={
+                  <CheckableTag
+                    key={song.songNum}
+                    checked={selectedSongs.indexOf(song) > -1}
+                    onChange={(checked) => this.handleSongPref(song, checked)}
+                  >
+                    <HeartOutlined />
+                  </CheckableTag>
+                }
+              >
+                <p>{song.artist}</p>
+              </Card>
+            ))}
+          </div>
+          <Button
+            className="next-button"
+            onClick={() => this.onNextClick(this.state.selectedSongs)}
+            type="primary"
+          >
+            NEXT
+          </Button>
         </div>
-        <Button
-          className="next-button"
-          onClick={() => this.onNextClick(this.state.selectedSongs)}
-          type="primary"
-        >
-          NEXT
-        </Button>
       </div>
     );
   }

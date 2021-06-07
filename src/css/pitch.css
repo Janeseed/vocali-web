@@ -6,8 +6,11 @@
 }
 
 .pitch-buttons {
-  left: calc(50% - 249px / 2);
-  bottom: 6vh;
+  display: flex;
+  justify-content: space-between;
+
+  width: 249px;
+  margin-bottom: 5vh;
 }
 
 .record-button,
@@ -37,9 +40,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 5rem;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  /* margin-top: 5vh; */
 }
 
 .currentpitches {
@@ -57,6 +58,7 @@
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
+  margin-inline: 2rem;
 }
 
 .pitchDisplay {

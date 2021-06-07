@@ -83,9 +83,9 @@
 }
 
 .description {
-  margin-top: 80px;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  margin-top: 10vh;
+  padding: 0 1.5rem;
+
   font-family: "Nanum Gothic", sans-serif;
   font-size: 22px;
   line-height: 32px;
@@ -93,9 +93,8 @@
 }
 
 .inputs {
-  margin-top: 100px;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  margin-top: 10vh;
+  padding: 0 1.5rem;
 }
 
 .input-div {
@@ -124,11 +123,10 @@
 }
 
 .next-button {
-  position: absolute;
   width: 194px;
   height: 48px;
-  left: calc(50% - 194px / 2 - 0.5px);
-  bottom: 5vh;
+
+  margin-bottom: 5vh;
   background: #6200ee;
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
   border-radius: 5px;
@@ -199,16 +197,6 @@
   color: rgba(0, 0, 0, 0.85);
 }
 
-.pitch-buttons {
-  display: flex;
-  justify-content: space-between;
-
-  position: absolute;
-  width: 249px;
-  left: calc(50% - 249px / 2);
-  bottom: 112px;
-}
-
 .return-button {
   position: absolute;
   left: 20px;
@@ -220,9 +208,8 @@
 .song-pref-div {
   display: flex;
   flex-direction: column;
-  max-height: 50vh;
+  max-height: 40vh;
   width: 100%;
-  position: absolute;
   overflow-y: scroll;
   overflow-x: hidden;
   align-items: center;
@@ -233,4 +220,20 @@
   margin: 5px 0;
   border: 1px solid #bfbfbf;
   box-shadow: 0px 0px 6px rgb(0 0 0 / 15%);
+}
+
+.flex-row-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.custom-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }

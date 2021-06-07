@@ -70,13 +70,13 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Layout className="layout">
+      <div className="custom-container">
         <InfoHeader
           history={this.props.history}
           people={this.state.selectedPeople}
           mood={this.state.selectedMood}
         />
-        <Content style={{ backgroundColor: "#ffffff" }}>
+        <div className="flex-row-container">
           <div className="selection-board">
             <div className="mood-selection">
               <p className="select-title">
@@ -113,13 +113,13 @@ class Home extends React.Component {
             </div>
           </div>
           <Button
-            className="find-button standard"
+            className="next-button standard"
             onClick={this.handleFindButtonClick}
             type="primary"
           >
             FIND SONG
           </Button>
-        </Content>
+        </div>
 
         <Modal
           title="Warning"
@@ -133,7 +133,7 @@ class Home extends React.Component {
         >
           <p>You should select one tag from each category :)</p>
         </Modal>
-      </Layout>
+      </div>
     );
   }
 }

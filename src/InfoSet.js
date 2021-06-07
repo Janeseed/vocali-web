@@ -54,36 +54,40 @@ class InfoSet extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="custom-container">
         <SimpleHeader history={this.props.history} back="none" />
-        <Paragraph className="description">
-          First,<br></br> Put in your information
-        </Paragraph>
-        <div className="inputs">
-          <div className="input-div">
-            <div className="subtitle">Name</div>
-            <Input
-              className="name-input"
-              size="large"
-              placeholder="ex. Gildong"
-              prefix={<UserOutlined />}
-              onChange={this.handleNameChange}
-            />
+        <div className="flex-row-container">
+          <Paragraph className="description">
+            First,<br></br> Put in your information
+          </Paragraph>
+          <div className="inputs">
+            <div className="input-div">
+              <div className="subtitle">Name</div>
+              <Input
+                className="name-input"
+                size="large"
+                placeholder="ex. Gildong"
+                prefix={<UserOutlined />}
+                onChange={this.handleNameChange}
+              />
+            </div>
+            <div className="input-div">
+              <div className="subtitle">Age</div>
+              <Input
+                className="age-input"
+                size="large"
+                placeholder="ex. 27"
+                onChange={this.handleAgeChange}
+              />
+            </div>
           </div>
-          <div className="input-div">
-            <div className="subtitle">Age</div>
-            <Input
-              className="age-input"
-              size="large"
-              placeholder="ex. 27"
-              onChange={this.handleAgeChange}
-            />
+          <div>
+            <Spin className="loading-next" spinning={this.state.loading} delay={500} />
+            <Button className="next-button" onClick={this.setInfo} type="primary">
+              NEXT
+            </Button>
           </div>
         </div>
-        <Spin className="loading-next" spinning={this.state.loading} delay={500} />
-        <Button className="next-button" onClick={this.setInfo} type="primary">
-          NEXT
-        </Button>
 
         <Modal
           title="Warning"
@@ -97,7 +101,7 @@ class InfoSet extends React.Component {
         >
           <p>You should fill out your name and age. Also your age should be valid number :)</p>
         </Modal>
-      </>
+      </div>
     );
   }
 }
