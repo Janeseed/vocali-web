@@ -15,7 +15,7 @@ class InfoSet extends React.Component {
     name: "",
     age: "",
     modal: false,
-    loading: true,
+    loading: false,
   };
   handleNameChange = (e) => {
     this.setState({
