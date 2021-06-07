@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/vocali-web/static/css/main.a41eaa6e.chunk.css",
-    "main.js": "/vocali-web/static/js/main.9cae49c6.chunk.js",
-    "main.js.map": "/vocali-web/static/js/main.9cae49c6.chunk.js.map",
+    "main.css": "/vocali-web/static/css/main.bbc0b728.chunk.css",
+    "main.js": "/vocali-web/static/js/main.54b52d0e.chunk.js",
+    "main.js.map": "/vocali-web/static/js/main.54b52d0e.chunk.js.map",
     "runtime-main.js": "/vocali-web/static/js/runtime-main.907a807a.js",
     "runtime-main.js.map": "/vocali-web/static/js/runtime-main.907a807a.js.map",
     "static/css/2.00bb4513.chunk.css": "/vocali-web/static/css/2.00bb4513.chunk.css",
@@ -10,7 +10,7 @@
     "static/js/2.49c9ec09.chunk.js.map": "/vocali-web/static/js/2.49c9ec09.chunk.js.map",
     "index.html": "/vocali-web/index.html",
     "static/css/2.00bb4513.chunk.css.map": "/vocali-web/static/css/2.00bb4513.chunk.css.map",
-    "static/css/main.a41eaa6e.chunk.css.map": "/vocali-web/static/css/main.a41eaa6e.chunk.css.map",
+    "static/css/main.bbc0b728.chunk.css.map": "/vocali-web/static/css/main.bbc0b728.chunk.css.map",
     "static/js/2.49c9ec09.chunk.js.LICENSE.txt": "/vocali-web/static/js/2.49c9ec09.chunk.js.LICENSE.txt",
     "static/media/vocali_logo2.dce5e0c5.svg": "/vocali-web/static/media/vocali_logo2.dce5e0c5.svg"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.907a807a.js",
     "static/css/2.00bb4513.chunk.css",
     "static/js/2.49c9ec09.chunk.js",
-    "static/css/main.a41eaa6e.chunk.css",
-    "static/js/main.9cae49c6.chunk.js"
+    "static/css/main.bbc0b728.chunk.css",
+    "static/js/main.54b52d0e.chunk.js"
   ]
 }
