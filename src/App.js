@@ -17,12 +17,12 @@ function App() {
         <Switch>
           <Route exact path="/" component={Start} />
           <Route exact path="/home" component={Home} />
-          <Route path="/info" component={InfoSet} />
-          <Route path="/songpref" component={SongPref} />
-          <Route path="/pitch" component={Pitch} />
-          <Route path="/result" component={Result} />
-          {/* <Route path="/weight" component={Weight} /> */}
-          <Route path="/likelist" component={LikeList} />
+          <Route exact path="/info" component={InfoSet} />
+          <Route exact path="/songpref" component={SongPref} />
+          <Route exact path="/pitch" component={Pitch} />
+          <Route exact path="/result" component={Result} />
+          {/* <Route exact path="/weight" component={Weight} /> */}
+          <Route exact path="/likelist" component={LikeList} />
         </Switch>
       </Router>
     </>
